@@ -38,20 +38,10 @@ body {
         }
       }
     }
-  }
-}
-
-@media only screen and (min-width: 678px) {
-  #calculator-body {
-    #weather-buttons-container {
+    @media only screen and (min-width: 678px) {
       grid-template-columns: repeat(3, 1fr);
     }
-  }
-}
-
-@media only screen and (min-width: 900px) {
-  #calculator-body {
-    #weather-buttons-container {
+    @media only screen and (min-width: 900px) {
       grid-template-columns: repeat(4, 1fr);
     }
   }

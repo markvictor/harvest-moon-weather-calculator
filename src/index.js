@@ -2,38 +2,46 @@ require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
 import "./style.scss";
 import { weatherTypes } from "./weathertypes.js";
 
-const getPointsTotal = function (type) {
-  const points = Number(
-    document.getElementById(`${type}-points-total`).textContent
-  );
+const seasonTotals = (function () {
+  let totalSun = 0;
+  let totalWater = 0;
 
-  return points;
-};
+  const getSun = () => totalSun;
+  const getWater = () => totalWater;
 
-const updateTotals = function (sun, water) {
-  document.getElementById("sun-points-total").textContent = sun;
-  document.getElementById("water-points-total").textContent = water;
+  const increaseTotals = function (amounts) {
+    totalSun += amounts.sun;
+    totalWater += amounts.water;
+  };
+
+  return { getSun, getWater, increaseTotals };
+})();
+
+const updateTotals = function () {
+  document.getElementById(
+    "sun-points-total"
+  ).textContent = seasonTotals.getSun();
+  document.getElementById(
+    "water-points-total"
+  ).textContent = seasonTotals.getWater();
 };
 
 const addWeatherToTotal = function (weather) {
-  let currentSun = getPointsTotal("sun");
-  let currentWater = getPointsTotal("water");
-
-  let newSun = currentSun + weather.sun;
-  let newWater = currentWater + weather.water;
-
-  updateTotals(newSun, newWater);
+  seasonTotals.increaseTotals(weather);
+  updateTotals();
 };
 
 const findWeatherType = function () {
+  const button = this.closest(".weather-button");
+
   const chosenWeather = weatherTypes.find(
-    (type) => type.weather === this.getAttribute("data-weather")
+    (type) => type.weather === button.getAttribute("data-weather")
   );
 
   addWeatherToTotal(chosenWeather);
 };
 
-const weatherButtons = document.querySelectorAll(".weather-button");
+const weatherButtons = document.querySelectorAll(".weather-button img");
 weatherButtons.forEach((button) => {
   button.addEventListener("click", findWeatherType);
 });
