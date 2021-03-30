@@ -1,3 +1,7 @@
+require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
+import "./style.scss";
+import { weatherTypes } from "./weathertypes.js";
+
 const getPointsTotal = function (type) {
   const points = Number(
     document.getElementById(`${type}-points-total`).textContent
@@ -22,49 +26,6 @@ const addWeatherToTotal = function (weather) {
 };
 
 const findWeatherType = function () {
-  const weatherTypes = [
-    {
-      weather: "sunny",
-      sun: 3,
-      water: 0,
-    },
-    {
-      weather: "clear",
-      sun: 1,
-      water: 0,
-    },
-    {
-      weather: "cloudy",
-      sun: 0,
-      water: 0,
-    },
-    {
-      weather: "drizzle",
-      sun: 0,
-      water: 1,
-    },
-    {
-      weather: "rainy",
-      sun: 0,
-      water: 2,
-    },
-    {
-      weather: "snowy",
-      sun: 0,
-      water: 2,
-    },
-    {
-      weather: "blizzard",
-      sun: 0,
-      water: 3,
-    },
-    {
-      weather: "hurricane",
-      sun: 0,
-      water: 3,
-    },
-  ];
-
   const chosenWeather = weatherTypes.find(
     (type) => type.weather === this.getAttribute("data-weather")
   );
@@ -72,7 +33,7 @@ const findWeatherType = function () {
   addWeatherToTotal(chosenWeather);
 };
 
-weatherButtons = document.querySelectorAll(".weather-button");
+const weatherButtons = document.querySelectorAll(".weather-button");
 weatherButtons.forEach((button) => {
   button.addEventListener("click", findWeatherType);
 });

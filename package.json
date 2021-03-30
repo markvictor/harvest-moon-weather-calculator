@@ -1,0 +1,28 @@
+{
+  "name": "hm-si-weather",
+  "version": "1.0.0",
+  "description": "Calculator for Harvest Moon Islands' sun and water points.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwern/harvest-moon-weather-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwern/harvest-moon-weather-calculator/issues"
+  },
+  "homepage": "https://github.com/jwern/harvest-moon-weather-calculator#readme",
+  "devDependencies": {
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "file-loader": "^6.2.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^11.0.1"
+  }
+}
