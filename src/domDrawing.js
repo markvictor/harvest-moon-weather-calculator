@@ -89,14 +89,6 @@ const displayNewCrop = function (crop) {
   cropsContainer.appendChild(newCropDiv);
 };
 
-// const refreshCurrentCropsHeavy = function () {
-//   const cropsContainer = getCropsContainer();
-//   while (cropsContainer.lastChild) {
-//     cropsContainer.removeChild(cropsContainer.lastChild);
-//   }
-//   myCrops.getCrops().forEach((crop) => displayNewCrop(crop));
-// };
-
 const refreshCurrentCrops = function () {
   myCrops.getCrops().forEach((crop) => {
     const cropDiv = document.querySelector(`[data-id="${crop.id}"]`);
