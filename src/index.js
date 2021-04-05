@@ -1,10 +1,11 @@
 require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
 import "./style.scss";
 import { weatherTypes } from "./weathertypes.js";
-import { Cucumber } from "./cropslist.js";
+import { Cucumber, Turnip } from "./cropslist.js";
 
-const myCuc = new Cucumber();
-console.log(myCuc.getAge());
+const myTup = new Turnip();
+myTup.nextDay({ weather: "sunny", sun: 17, water: 2 });
+myTup.nextDay({ weather: "sunny", sun: 5, water: 2 });
 
 const seasonTotals = (function () {
   let totalSun = 0;

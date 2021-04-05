@@ -1,5 +1,61 @@
-class Turnip {
+class Crop {
   constructor() {
+    this._totalDays = 0;
+    this._totalWater = 0;
+    this._totalSun = 0;
+  }
+
+  increaseDays() {
+    this._totalDays++;
+  }
+
+  increaseWater(water) {
+    this._totalWater += water;
+  }
+
+  increaseSun(sun) {
+    this._totalSun += sun;
+  }
+
+  getAge() {
+    return this.ages[this.currentAge];
+  }
+
+  nextDay(weather) {
+    this.increaseDays();
+    this.increaseWater(weather.water);
+    this.increaseSun(weather.sun);
+
+    this.checkStatus();
+  }
+
+  matureCrop() {
+    console.log("The crop has matured");
+  }
+
+  witherCrop() {
+    console.log("The crop has withered");
+  }
+
+  checkStatus() {
+    let age = this.getAge();
+
+    if (this._totalWater > age.water.max || this._totalSun > age.sun.max) {
+      this.witherCrop();
+      return;
+    }
+
+    if (this._totalDays >= age.days) {
+      if (this._totalWater >= age.water.min && this._totalSun >= age.sun.min) {
+        this.matureCrop();
+      }
+    }
+  }
+}
+
+class Turnip extends Crop {
+  constructor() {
+    super();
     this.seed = {
       days: 2,
       sun: { min: 3, max: 19 },
@@ -10,11 +66,14 @@ class Turnip {
       sun: { min: 3, max: 19 },
       water: { min: 2, max: 19 },
     };
+    this.ages = [this.seed, this.sprout];
+    this.currentAge = 0;
   }
 }
 
-class Cucumber {
+class Cucumber extends Crop {
   constructor() {
+    super();
     this.seed = {
       days: 4,
       sun: { min: 7, max: 29 },
@@ -32,16 +91,6 @@ class Cucumber {
     };
     this.ages = [this.seed, this.sprout, this.sprout2];
     this.currentAge = 0;
-  }
-
-  getAge() {
-    return this.ages[this.currentAge];
-  }
-
-  nextDay() {
-    // when weather button is clicked,
-    // decrease days left on currentAge
-    // and check against water/sun needs for next level
   }
 }
 
@@ -123,4 +172,4 @@ const crops = {
   },
 };
 
-export { Cucumber };
+export { Crop, Turnip, Cucumber };
