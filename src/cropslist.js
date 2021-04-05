@@ -1,8 +1,29 @@
+const cropId = (function () {
+  let id = 0;
+
+  const getNewId = () => {
+    id++;
+    return id;
+  };
+
+  return { getNewId };
+})();
+
 class Crop {
   constructor() {
     this._totalDays = 0;
     this._totalWater = 0;
     this._totalSun = 0;
+    this._ages = [
+      {
+        stage: "mature",
+      },
+      {
+        stage: "withered",
+      },
+    ];
+    this._currentAge = 0;
+    this._id = cropId.getNewId();
   }
 
   increaseDays() {
@@ -17,8 +38,20 @@ class Crop {
     this._totalSun += sun;
   }
 
-  getAge() {
-    return this.ages[this.currentAge];
+  get age() {
+    return this._ages[this._currentAge];
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  get water() {
+    return this._totalWater;
+  }
+
+  get sun() {
+    return this._totalSun;
   }
 
   nextDay(weather) {
@@ -29,16 +62,32 @@ class Crop {
     this.checkStatus();
   }
 
-  matureCrop() {
-    console.log("The crop has matured");
+  resetTotals() {
+    this._totalDays = 0;
+    this._totalWater = 0;
+    this._totalSun = 0;
+  }
+
+  ageCrop() {
+    this._currentAge++;
+    this.resetTotals();
   }
 
   witherCrop() {
-    console.log("The crop has withered");
+    // While we could do "this.currentAge = this.ages.length - 1",
+    // as we are putting withered stage last in all crops
+    // this will allow us to change the order of ages if we want to in the future
+    let witheredStage = this._ages.find((age) => age.stage === "withered");
+    this._currentAge = this._ages.indexOf(witheredStage);
   }
 
   checkStatus() {
-    let age = this.getAge();
+    let age = this.age;
+
+    if (age.stage === "mature" || age.stage === "withered") {
+      console.log("Crop is max age");
+      return;
+    }
 
     if (this._totalWater > age.water.max || this._totalSun > age.sun.max) {
       this.witherCrop();
@@ -47,7 +96,7 @@ class Crop {
 
     if (this._totalDays >= age.days) {
       if (this._totalWater >= age.water.min && this._totalSun >= age.sun.min) {
-        this.matureCrop();
+        this.ageCrop();
       }
     }
   }
@@ -56,86 +105,96 @@ class Crop {
 class Turnip extends Crop {
   constructor() {
     super();
-    this.seed = {
-      days: 2,
-      sun: { min: 3, max: 19 },
-      water: { min: 2, max: 19 },
-    };
-    this.sprout = {
-      days: 2,
-      sun: { min: 3, max: 19 },
-      water: { min: 2, max: 19 },
-    };
-    this.ages = [this.seed, this.sprout];
-    this.currentAge = 0;
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 2,
+        sun: { min: 3, max: 19 },
+        water: { min: 2, max: 19 },
+      },
+      {
+        stage: "sprout",
+        days: 2,
+        sun: { min: 3, max: 19 },
+        water: { min: 2, max: 19 },
+      }
+    );
+  }
+}
+
+class Potato extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 3,
+        sun: { min: 4, max: 19 },
+        water: { min: 3, max: 19 },
+      },
+      {
+        stage: "sprout",
+        days: 4,
+        sun: { min: 6, max: 27 },
+        water: { min: 4, max: 27 },
+      }
+    );
   }
 }
 
 class Cucumber extends Crop {
   constructor() {
     super();
-    this.seed = {
-      days: 4,
-      sun: { min: 7, max: 29 },
-      water: { min: 3, max: 11 },
-    };
-    this.sprout = {
-      days: 3,
-      sun: { min: 5, max: 23 },
-      water: { min: 2, max: 7 },
-    };
-    this.sprout2 = {
-      days: 2,
-      sun: { min: 4, max: 17 },
-      water: { min: 2, max: 9 },
-    };
-    this.ages = [this.seed, this.sprout, this.sprout2];
-    this.currentAge = 0;
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 4,
+        sun: { min: 7, max: 29 },
+        water: { min: 3, max: 11 },
+      },
+      {
+        stage: "sprout",
+        days: 3,
+        sun: { min: 5, max: 23 },
+        water: { min: 2, max: 7 },
+      },
+      {
+        stage: "sprout2",
+        days: 2,
+        sun: { min: 4, max: 17 },
+        water: { min: 2, max: 9 },
+      }
+    );
+  }
+}
+
+class Cabbage extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 4,
+        sun: { min: 9, max: 24 },
+        water: { min: 3, max: 11 },
+      },
+      {
+        stage: "sprout",
+        days: 5,
+        sun: { min: 12, max: 29 },
+        water: { min: 4, max: 11 },
+      },
+      {
+        stage: "sprout2",
+        days: 5,
+        sun: { min: 12, max: 26 },
+        water: { min: 5, max: 15 },
+      }
+    );
   }
 }
 
 const crops = {
-  turnip: {
-    seed: {
-      days: 2,
-      sun: { min: 3, max: 19 },
-      water: { min: 2, max: 19 },
-    },
-    sprout: {
-      days: 2,
-      sun: { min: 3, max: 19 },
-      water: { min: 2, max: 19 },
-    },
-  },
-  potato: {
-    seed: {
-      days: 3,
-      sun: { min: 4, max: 19 },
-      water: { min: 3, max: 19 },
-    },
-    sprout: {
-      days: 4,
-      sun: { min: 6, max: 27 },
-      water: { min: 4, max: 27 },
-    },
-  },
-  cucumber: {
-    seed: {
-      days: 4,
-      sun: { min: 7, max: 29 },
-      water: { min: 3, max: 11 },
-    },
-    sprout: {
-      days: 3,
-      sun: { min: 5, max: 23 },
-      water: { min: 2, max: 7 },
-    },
-    sprout2: {
-      days: 2,
-      sun: { min: 4, max: 17 },
-      water: { min: 2, max: 9 },
-    },
-  },
   strawberry: {
     seed: {
       days: 4,
@@ -153,23 +212,8 @@ const crops = {
       water: { min: 2, max: 7 },
     },
   },
-  cabbage: {
-    seed: {
-      days: 4,
-      sun: { min: 9, max: 24 },
-      water: { min: 3, max: 11 },
-    },
-    sprout: {
-      days: 5,
-      sun: { min: 12, max: 29 },
-      water: { min: 4, max: 11 },
-    },
-    sprout2: {
-      days: 5,
-      sun: { min: 12, max: 26 },
-      water: { min: 5, max: 15 },
-    },
-  },
 };
 
-export { Crop, Turnip, Cucumber };
+const allCrops = { Turnip, Potato, Cucumber, Cabbage };
+
+export { Crop, allCrops };

@@ -1,40 +1,12 @@
 require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
 import "./style.scss";
+import {
+  addWeatherToTotal,
+  displayNewCrop,
+  refreshCurrentCrops,
+} from "./domDrawing.js";
+import { addWeatherToCrops, createNewCrop } from "./trackCrops.js";
 import { weatherTypes } from "./weathertypes.js";
-import { Cucumber, Turnip } from "./cropslist.js";
-
-const myTup = new Turnip();
-myTup.nextDay({ weather: "sunny", sun: 17, water: 2 });
-myTup.nextDay({ weather: "sunny", sun: 5, water: 2 });
-
-const seasonTotals = (function () {
-  let totalSun = 0;
-  let totalWater = 0;
-
-  const getSun = () => totalSun;
-  const getWater = () => totalWater;
-
-  const increaseTotals = function (amounts) {
-    totalSun += amounts.sun;
-    totalWater += amounts.water;
-  };
-
-  return { getSun, getWater, increaseTotals };
-})();
-
-const updateTotals = function () {
-  document.getElementById(
-    "sun-points-total"
-  ).textContent = seasonTotals.getSun();
-  document.getElementById(
-    "water-points-total"
-  ).textContent = seasonTotals.getWater();
-};
-
-const addWeatherToTotal = function (weather) {
-  seasonTotals.increaseTotals(weather);
-  updateTotals();
-};
 
 const findWeatherType = function () {
   const button = this.closest(".weather-button");
@@ -44,9 +16,21 @@ const findWeatherType = function () {
   );
 
   addWeatherToTotal(chosenWeather);
+  addWeatherToCrops(chosenWeather);
+  refreshCurrentCrops();
+};
+
+const addCrop = function (event) {
+  event.preventDefault();
+  let crop = Object.fromEntries(new FormData(event.target).entries());
+  let newCrop = createNewCrop(crop.type);
+  displayNewCrop(newCrop);
 };
 
 const weatherButtons = document.querySelectorAll(".weather-button img");
 weatherButtons.forEach((button) => {
   button.addEventListener("click", findWeatherType);
 });
+
+const addCropForm = document.getElementById("add-crops-form");
+addCropForm.addEventListener("submit", (e) => addCrop(e));
