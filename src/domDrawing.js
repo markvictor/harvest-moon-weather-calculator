@@ -1,33 +1,33 @@
 import { myCrops } from "./trackCrops.js";
 
-const seasonTotals = (function () {
-  let totalSun = 0;
-  let totalWater = 0;
+// const seasonTotals = (function () {
+//   let totalSun = 0;
+//   let totalWater = 0;
 
-  const getSun = () => totalSun;
-  const getWater = () => totalWater;
+//   const getSun = () => totalSun;
+//   const getWater = () => totalWater;
 
-  const increaseTotals = function (amounts) {
-    totalSun += amounts.sun;
-    totalWater += amounts.water;
-  };
+//   const increaseTotals = function (amounts) {
+//     totalSun += amounts.sun;
+//     totalWater += amounts.water;
+//   };
 
-  return { getSun, getWater, increaseTotals };
-})();
+//   return { getSun, getWater, increaseTotals };
+// })();
 
-const updateTotals = function () {
-  document.getElementById(
-    "sun-points-total"
-  ).textContent = seasonTotals.getSun();
-  document.getElementById(
-    "water-points-total"
-  ).textContent = seasonTotals.getWater();
-};
+// const updateTotals = function () {
+//   document.getElementById(
+//     "sun-points-total"
+//   ).textContent = seasonTotals.getSun();
+//   document.getElementById(
+//     "water-points-total"
+//   ).textContent = seasonTotals.getWater();
+// };
 
-const addWeatherToTotal = function (weather) {
-  seasonTotals.increaseTotals(weather);
-  updateTotals();
-};
+// const addWeatherToTotal = function (weather) {
+//   seasonTotals.increaseTotals(weather);
+//   updateTotals();
+// };
 
 const createElementWithClass = function (type, className) {
   const newElement = document.createElement(type);
@@ -69,11 +69,15 @@ const getCropsContainer = function () {
 const removeCropFromPage = function (crop) {
   const cropsContainer = getCropsContainer();
   cropsContainer.removeChild(crop);
-  console.log(myCrops.getCrops());
+};
+
+const getCropDiv = function (crop) {
+  return crop.closest(".growing-crop");
 };
 
 const scytheCrop = function () {
-  const cropToRemove = this.closest(".growing-crop");
+  const cropToRemove = getCropDiv(this);
+
   if (confirm("Really remove?")) {
     myCrops.removeCrop(cropToRemove);
     removeCropFromPage(cropToRemove);
@@ -81,7 +85,17 @@ const scytheCrop = function () {
 };
 
 const harvestCrop = function () {
-  console.log("Harvesting");
+  const cropToHarvest = getCropDiv(this);
+
+  if (confirm("Harvest crop?")) {
+    let cropRegrows = myCrops.checkRegrow(cropToHarvest);
+
+    if (cropRegrows) {
+      updateCropDisplay(cropToHarvest, cropRegrows);
+    } else {
+      removeCropFromPage(cropToHarvest);
+    }
+  }
 };
 
 const createNewCropButtons = function () {
@@ -145,4 +159,4 @@ const refreshCurrentCrops = function () {
   });
 };
 
-export { addWeatherToTotal, displayNewCrop, refreshCurrentCrops };
+export { displayNewCrop, refreshCurrentCrops };

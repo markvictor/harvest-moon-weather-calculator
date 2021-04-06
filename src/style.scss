@@ -14,14 +14,14 @@ body {
 #calculator-body {
   text-align: center;
 
-  #weather-points-total {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin: 20px 0;
-    .points {
-      padding: 0 10px;
-    }
-  }
+  // #weather-points-total {
+  //   display: grid;
+  //   grid-template-columns: 1fr 1fr;
+  //   margin: 20px 0;
+  //   .points {
+  //     padding: 0 10px;
+  //   }
+  // }
 
   #weather-buttons-container {
     display: grid;

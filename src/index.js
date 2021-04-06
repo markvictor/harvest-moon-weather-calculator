@@ -1,10 +1,6 @@
 require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
 import "./style.scss";
-import {
-  addWeatherToTotal,
-  displayNewCrop,
-  refreshCurrentCrops,
-} from "./domDrawing.js";
+import { displayNewCrop, refreshCurrentCrops } from "./domDrawing.js";
 import { addWeatherToCrops, createNewCrop } from "./trackCrops.js";
 import { weatherTypes } from "./weathertypes.js";
 
@@ -15,7 +11,7 @@ const findWeatherType = function () {
     (type) => type.weather === button.getAttribute("data-weather")
   );
 
-  addWeatherToTotal(chosenWeather);
+  // addWeatherToTotal(chosenWeather);
   addWeatherToCrops(chosenWeather);
   refreshCurrentCrops();
 };

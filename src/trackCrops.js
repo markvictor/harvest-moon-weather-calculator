@@ -5,15 +5,31 @@ const myCrops = (function () {
 
   const getCrops = () => crops;
   const addCrop = (crop) => crops.push(crop);
-  const removeCrop = (crop) => {
-    let cropToRemove = crops.find(
-      (c) => c.id === Number(crop.getAttribute("data-id"))
+
+  const findCropFromDOM = (crop) => {
+    const arrayCrop = crops.find(
+      (veg) => veg.id === Number(crop.getAttribute("data-id"))
     );
+    return arrayCrop;
+  };
+
+  const removeCrop = (crop) => {
+    let cropToRemove = findCropFromDOM(crop);
     let removeAtIndex = crops.indexOf(cropToRemove);
     crops.splice(removeAtIndex, 1);
   };
 
-  return { getCrops, addCrop, removeCrop };
+  const checkRegrow = (crop) => {
+    let cropToCheck = findCropFromDOM(crop);
+    if (!cropToCheck.regrowStatus) {
+      return false;
+    } else {
+      cropToCheck.regrowCrop();
+      return cropToCheck;
+    }
+  };
+
+  return { getCrops, addCrop, removeCrop, checkRegrow };
 })();
 
 const addWeatherToCrops = function (weather) {

@@ -45,6 +45,10 @@ class Crop {
     return this._id;
   }
 
+  get regrowStatus() {
+    return this._regrow;
+  }
+
   get water() {
     return this._totalWater;
   }
@@ -106,6 +110,14 @@ class Crop {
     this._totalDays = 0;
     this._totalWater = 0;
     this._totalSun = 0;
+  }
+
+  regrowCrop() {
+    if (this._regrow) {
+      let regrowStage = this._ages.find((age) => age.stage === this._regrow);
+      let regrowIndex = this._ages.indexOf(regrowStage);
+      this._currentAge = regrowIndex;
+    }
   }
 
   ageCrop() {
@@ -320,6 +332,6 @@ const crops = {
   },
 };
 
-const allCrops = { Turnip, Potato, Cucumber, Cabbage };
+const allCrops = { Turnip, Potato, Cucumber, Cabbage, Strawberry };
 
 export { Crop, allCrops };
