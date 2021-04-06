@@ -1,0 +1,63 @@
+# README
+
+# Harvest Moon: Sunshine Islands Weather Calculator
+
+This calculator is specifically designed for use with _Harvest Moon: Sunshine Islands_ or _Harvest Moon: Island of Happiness_ (both for the Nintendo DS). In these games, crops require a specific number of **days**, **water** points, and **sun** points in order to progress through their respective growth stages. This calculator allows you to add specific types of fruits/vegetables to your list of currently-growing crops and then add a day's **water** and **sun** points to all current crops by pressing a single button.
+
+This project is a work-in-progress: see the [Future Features](##future-features) section below for items that will hopefully be added soon.
+
+## Functionality
+
+The buttons at the top of the calculator utilize the weather icons used in-game and correspond to the matching amount of **water**/**sun** points a given weather type will provide (available in _weathertypes.js_):
+
+- Sunny: 3 **sun** & 0 **water**
+- Clear: 1 **sun** & 0 **water**
+- Cloudy: 0 **sun** & 0 **water**
+- Drizzle: 0 **sun** & 1 **water**
+- Rainy: 0 **sun** & 2 **water**
+- Snowy: 0 **sun** & 3 **water**
+- Hurricane: 0 **sun** & 3 **water**
+- Blizzard: 0 **sun** & 3 **water**
+
+There are three variations to a crop's display:
+
+1. If the crop is still _growing_ and needs more **sun**, **water**, or **days**, the crop total for the outstanding value(s) will count down from the **minimum** amount needed. For example: if a turnip had 0 **sun** and was in the seed stage, meaning it still needed 3 **sun** to reach the next stage (sprout), its info would say "Sun Needed: 3." Clicking on the "Clear" day button would add +1 sun to its total, and change its display to "Sun Needed: 2."
+2. If a crop has reached _maturity_ and can be harvested, its display will change to "Max" values: the max amount you can give it (assuming you don't harvest it in the meanwhile) before it will _wither_. Max values also count down as weather points are applied, displaying the remainder you can safely give to a crop.
+3. If a crop is _withered_ -- reached by giving it too many **sun** or **water** points, or exceeding its **days** limit when _mature_ -- it is merely dead: there are no values to track any longer as the crop will remain withered until it is removed. Currently the values are simply changed to "N/A" when a _withered_ state is reached.
+
+The values required by each crop type and its stages are stored in _cropslist.js_ within each crop Class.
+
+## Usage
+
+To add a crop to your crop list, pick the crop type from the dropdown positioned below the calculator buttons and hit "Add." Currently, crops are listed in the order they are added, but a possible future feature will allow you to choose crops' "placement."
+
+To add a new day and its' respective weather points to all current crops, click the button that corresponds to the type of weather you're experiencing in-game. At the moment there is no undo button if you accidentally hit a weather button, but I plan to add one in the future.
+
+If you want to remove a crop from your list -- for example, one you added by mistake or one that is withered -- click the "Scythe" button.
+
+If you want to harvest a crop from your list, click the "Harvest" button. If a crop does not regrow, this is essentially identical to using "Scythe" to remove a crop. However, if a crop regrows upon harvesting (like strawberries or cucumbers), then clicking "Harvest" will reset the crop to its regrowth stage and allow you to continue tracking its required points. At the moment the "Harvest" button is always available, but in the future it will only show up if a crop is at its _mature_ stage, which could serve as a helpful reminder of what crops you can harvest that day.
+
+Note: data storage is not implemented yet, so refreshing the page or exiting the browser will reset all crop data.
+
+## Future Features
+
+Features I intend to add in the near future:
+
+- [ ] Hide "Harvest" button unless a crop is _mature_
+- [ ] Auto-populate dropdown form based on _cropslist.js_ list (generate with JS and remove hard-coded HTML)
+- [ ] Add "Water" button to crops so you can track additional water applied via watering can (limit x2 per day)
+- [ ] Set up data storage for crop list persistence across sessions / devices
+- [ ] Add crop images/icons next to name
+- [ ] Add "Undo" button in case you accidentally hit a weather icon
+
+Nice-to-have features that are lower priority:
+
+- [ ] Add a separate crop list for greenhouse crops that is not affected by weather buttons and has sunstone buttons instead
+- [ ] Add stage icons next to crop stage that change based on growth level
+- [ ] Make crop separator / border change length based on how much water a crop has received for a given stage (and add a "sun" border that changes based on sun points)
+- [ ] Create a visual grid where you can "place" crops instead of simply adding them to a list in order, allowing you to match where they are planted in-game: e.g., a 6x6 grid and you can choose to put Turnips in row 6, column 1 and Potatoes in row 1, column 6, etc.
+- [ ] Add animation when pressing buttons: water sprinkle or sunshine or snow flurries, etc.
+
+## Technologies
+
+This Harvest Moon calculator is built with HTML, SCSS, and JavaScript. It uses webpack for module bundling and SCSS-to-CSS compiling and minifying. Weather and crop images, as well as values for crop growth stages, were taken from [Fogu.com](https://fogu.com/hm8/basics/weather.php) (the most useful Harvest Moon / Story of Seasons site on the web, in my huge-fan opinion). The font is "Chango" from [Google Fonts](https://fonts.google.com/specimen/Chango).
