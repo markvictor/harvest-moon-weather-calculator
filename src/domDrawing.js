@@ -40,8 +40,9 @@ const setCropText = function (divElement, divType, crop) {
   const textTypes = {
     name: `${crop.constructor.name}`,
     stage: `Stage: ${crop.age.stage}`,
-    water: `Water: ${crop.water}`,
-    sun: `Sun: ${crop.sun}`,
+    days: `${crop.daysNeeded}`,
+    water: `${crop.waterNeeded}`,
+    sun: `${crop.sunNeeded}`,
   };
 
   divElement.innerText = textTypes[divType];
@@ -50,6 +51,9 @@ const setCropText = function (divElement, divType, crop) {
 const updateCropDisplay = function (cropDiv, crop) {
   const stageSpan = cropDiv.querySelector(".growing-crop-stage");
   setCropText(stageSpan, "stage", crop);
+
+  const daysSpan = cropDiv.querySelector(".growing-crop-days");
+  setCropText(daysSpan, "days", crop);
 
   const waterSpan = cropDiv.querySelector(".growing-crop-water");
   setCropText(waterSpan, "water", crop);
@@ -66,10 +70,17 @@ const createNewCropDiv = function (crop) {
   setCropText(cropNameSpan, "name", crop);
 
   const cropStageSpan = createElementWithClass("span", "growing-crop-stage");
+  const cropDaysSpan = createElementWithClass("span", "growing-crop-days");
   const cropWaterCount = createElementWithClass("span", "growing-crop-water");
   const cropSunCount = createElementWithClass("span", "growing-crop-sun");
 
-  const childDivs = [cropNameSpan, cropStageSpan, cropWaterCount, cropSunCount];
+  const childDivs = [
+    cropNameSpan,
+    cropStageSpan,
+    cropDaysSpan,
+    cropWaterCount,
+    cropSunCount,
+  ];
 
   childDivs.forEach((child) => newCropDiv.appendChild(child));
 

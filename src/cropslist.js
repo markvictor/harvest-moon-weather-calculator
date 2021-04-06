@@ -16,9 +16,6 @@ class Crop {
     this._totalSun = 0;
     this._ages = [
       {
-        stage: "mature",
-      },
-      {
         stage: "withered",
       },
     ];
@@ -54,6 +51,45 @@ class Crop {
     return this._totalSun;
   }
 
+  get waterNeeded() {
+    if (!this.age.water) {
+      return "Water N/A";
+    }
+
+    const water = this.age.water.min - this._totalWater;
+    if (water >= 0) {
+      return `Water Needed: ${water}`;
+    } else {
+      return `Max Water: ${this.age.water.max - this._totalWater}`;
+    }
+  }
+
+  get sunNeeded() {
+    if (!this.age.sun) {
+      return "Sun N/A";
+    }
+
+    const sun = this.age.sun.min - this._totalSun;
+    if (sun >= 0) {
+      return `Sun Needed: ${sun}`;
+    } else {
+      return `Max Sun: ${this.age.sun.max - this._totalSun}`;
+    }
+  }
+
+  get daysNeeded() {
+    if (!this.age.days) {
+      return "Days N/A";
+    }
+
+    const days = this.age.days - this._totalDays;
+    if (days >= 0) {
+      return `Days Left: ${days}`;
+    } else {
+      return `Days Left: 0`;
+    }
+  }
+
   nextDay(weather) {
     this.increaseDays();
     this.increaseWater(weather.water);
@@ -84,17 +120,25 @@ class Crop {
   checkStatus() {
     let age = this.age;
 
-    if (age.stage === "mature" || age.stage === "withered") {
-      console.log("Crop is max age");
+    // Don't do anything if crop is withered
+    if (age.stage === "withered") {
       return;
     }
 
+    // If crop has exceeded either maximum, wither it
     if (this._totalWater > age.water.max || this._totalSun > age.sun.max) {
       this.witherCrop();
       return;
     }
 
+    // If crop has met its # of days requirement...
     if (this._totalDays >= age.days) {
+      // If it's already a mature crop, wither it
+      if (age.stage === "mature") {
+        this.witherCrop();
+        return;
+      }
+      // If it's not a mature crop, and it's met its other minimums, age it
       if (this._totalWater >= age.water.min && this._totalSun >= age.sun.min) {
         this.ageCrop();
       }
@@ -117,6 +161,12 @@ class Turnip extends Crop {
         days: 2,
         sun: { min: 3, max: 19 },
         water: { min: 2, max: 19 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 39 },
+        water: { max: 19 },
       }
     );
   }
@@ -137,6 +187,12 @@ class Potato extends Crop {
         days: 4,
         sun: { min: 6, max: 27 },
         water: { min: 4, max: 27 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 19 },
+        water: { max: 9 },
       }
     );
   }
@@ -163,6 +219,12 @@ class Cucumber extends Crop {
         days: 2,
         sun: { min: 4, max: 17 },
         water: { min: 2, max: 9 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 19 },
+        water: { max: 7 },
       }
     );
   }
@@ -189,6 +251,12 @@ class Cabbage extends Crop {
         days: 5,
         sun: { min: 12, max: 26 },
         water: { min: 5, max: 15 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 9 },
+        water: { max: 9 },
       }
     );
   }
