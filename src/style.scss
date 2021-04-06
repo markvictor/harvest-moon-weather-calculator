@@ -86,5 +86,15 @@ body {
     span {
       padding: 6px 20px;
     }
+    .growing-crop-buttons {
+      padding: 6px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
+      button {
+        cursor: pointer;
+        padding: 6px;
+      }
+    }
   }
 }

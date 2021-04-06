@@ -62,6 +62,45 @@ const updateCropDisplay = function (cropDiv, crop) {
   setCropText(sunSpan, "sun", crop);
 };
 
+const getCropsContainer = function () {
+  return document.getElementById("current-crops");
+};
+
+const removeCropFromPage = function (crop) {
+  const cropsContainer = getCropsContainer();
+  cropsContainer.removeChild(crop);
+  console.log(myCrops.getCrops());
+};
+
+const scytheCrop = function () {
+  const cropToRemove = this.closest(".growing-crop");
+  if (confirm("Really remove?")) {
+    myCrops.removeCrop(cropToRemove);
+    removeCropFromPage(cropToRemove);
+  }
+};
+
+const harvestCrop = function () {
+  console.log("Harvesting");
+};
+
+const createNewCropButtons = function () {
+  const cropButtons = createElementWithClass("div", "growing-crop-buttons");
+  const cropHarvestButton = createElementWithClass("button", "harvest-button");
+  const cropScytheButton = createElementWithClass("button", "scythe-button");
+
+  cropHarvestButton.innerText = "Harvest";
+  cropScytheButton.innerText = "Scythe";
+
+  cropHarvestButton.addEventListener("click", harvestCrop);
+  cropScytheButton.addEventListener("click", scytheCrop);
+
+  cropButtons.appendChild(cropHarvestButton);
+  cropButtons.appendChild(cropScytheButton);
+
+  return cropButtons;
+};
+
 const createNewCropDiv = function (crop) {
   const newCropDiv = createElementWithClass("div", "growing-crop");
   newCropDiv.setAttribute("data-id", crop.id);
@@ -74,12 +113,15 @@ const createNewCropDiv = function (crop) {
   const cropWaterCount = createElementWithClass("span", "growing-crop-water");
   const cropSunCount = createElementWithClass("span", "growing-crop-sun");
 
+  const cropButtons = createNewCropButtons();
+
   const childDivs = [
     cropNameSpan,
     cropStageSpan,
     cropDaysSpan,
     cropWaterCount,
     cropSunCount,
+    cropButtons,
   ];
 
   childDivs.forEach((child) => newCropDiv.appendChild(child));
@@ -87,10 +129,6 @@ const createNewCropDiv = function (crop) {
   updateCropDisplay(newCropDiv, crop);
 
   return newCropDiv;
-};
-
-const getCropsContainer = function () {
-  return document.getElementById("current-crops");
 };
 
 const displayNewCrop = function (crop) {

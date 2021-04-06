@@ -21,6 +21,7 @@ class Crop {
     ];
     this._currentAge = 0;
     this._id = cropId.getNewId();
+    this._regrow = false;
   }
 
   increaseDays() {
@@ -35,6 +36,7 @@ class Crop {
     this._totalSun += sun;
   }
 
+  /* The following get methods are used for DOM displays */
   get age() {
     return this._ages[this._currentAge];
   }
@@ -89,6 +91,7 @@ class Crop {
       return `Days Left: 0`;
     }
   }
+  /* End of DOM display get methods */
 
   nextDay(weather) {
     this.increaseDays();
@@ -99,6 +102,7 @@ class Crop {
   }
 
   resetTotals() {
+    // When a crop reaches a new age, its counts start over
     this._totalDays = 0;
     this._totalWater = 0;
     this._totalSun = 0;
@@ -227,6 +231,7 @@ class Cucumber extends Crop {
         water: { max: 7 },
       }
     );
+    this._regrow = "sprout2";
   }
 }
 
@@ -259,6 +264,39 @@ class Cabbage extends Crop {
         water: { max: 9 },
       }
     );
+  }
+}
+
+class Strawberry extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 4,
+        sun: { min: 4, max: 9 },
+        water: { min: 4, max: 11 },
+      },
+      {
+        stage: "sprout",
+        days: 3,
+        sun: { min: 3, max: 9 },
+        water: { min: 3, max: 11 },
+      },
+      {
+        stage: "sprout2",
+        days: 2,
+        sun: { min: 3, max: 5 },
+        water: { min: 2, max: 7 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 9 },
+        water: { max: 9 },
+      }
+    );
+    this._regrow = "sprout2";
   }
 }
 
