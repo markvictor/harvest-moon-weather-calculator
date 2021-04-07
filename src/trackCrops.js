@@ -29,7 +29,13 @@ const myCrops = (function () {
     }
   };
 
-  return { getCrops, addCrop, removeCrop, checkRegrow };
+  const waterCrop = (crop) => {
+    let cropToWater = findCropFromDOM(crop);
+    cropToWater.increaseWater(1);
+    return cropToWater;
+  };
+
+  return { getCrops, addCrop, removeCrop, checkRegrow, waterCrop };
 })();
 
 const addWeatherToCrops = function (weather) {

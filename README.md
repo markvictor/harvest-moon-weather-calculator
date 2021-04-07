@@ -45,7 +45,7 @@ Features I intend to add in the near future:
 
 - [x] Hide "Harvest" button unless a crop is _mature_
 - [x] Auto-populate dropdown form based on [cropslist.js](src/cropslist.js) list (generate with JS and remove hard-coded HTML)
-- [ ] Add "Water" button to crops so you can track additional water applied via watering can
+- [x] Add "Water" button to crops so you can track additional water applied via watering can
 - [ ] Set up data storage for crop list persistence across sessions / devices
 - [ ] Add crop images/icons next to name
 - [ ] Add "Undo" button in case you accidentally hit a weather icon

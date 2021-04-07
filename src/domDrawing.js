@@ -124,20 +124,31 @@ const harvestCrop = function () {
   }
 };
 
+const waterCrop = function () {
+  const cropToWater = getCropDiv(this);
+
+  let wateredCrop = myCrops.waterCrop(cropToWater);
+  updateCropDisplay(cropToWater, wateredCrop);
+};
+
 const createNewCropButtons = function () {
   const cropButtons = createElementWithClass("div", "growing-crop-buttons");
   const cropHarvestButton = createElementWithClass("button", "harvest-button");
   const cropScytheButton = createElementWithClass("button", "scythe-button");
+  const cropWaterButton = createElementWithClass("button", "water-button");
 
   cropHarvestButton.innerText = "Harvest";
   cropHarvestButton.classList.add("hidden");
   cropScytheButton.innerText = "Scythe";
+  cropWaterButton.innerText = "Water";
 
   cropHarvestButton.addEventListener("click", harvestCrop);
   cropScytheButton.addEventListener("click", scytheCrop);
+  cropWaterButton.addEventListener("click", waterCrop);
 
   cropButtons.appendChild(cropHarvestButton);
   cropButtons.appendChild(cropScytheButton);
+  cropButtons.appendChild(cropWaterButton);
 
   return cropButtons;
 };

@@ -1,3 +1,7 @@
+@mixin container-padding {
+  padding: 12px;
+}
+
 html {
   font-family: "Chango", cursive;
   font-size: 22px;
@@ -5,6 +9,7 @@ html {
 
 body {
   font-size: 1rem;
+  margin: 0;
 }
 
 .limited-container {
@@ -13,6 +18,7 @@ body {
 
 #calculator-body {
   text-align: center;
+  @include container-padding;
 
   // #weather-points-total {
   //   display: grid;
@@ -56,12 +62,13 @@ body {
 
 #add-crops {
   text-align: center;
-  padding: 20px;
+  @include container-padding;
 }
 
 #current-crops {
   max-width: 1200px;
   display: grid;
+  @include container-padding;
   @media only screen and (min-width: 678px) {
     grid-template-columns: repeat(2, 1fr);
     justify-items: center;
@@ -89,7 +96,7 @@ body {
     .growing-crop-buttons {
       padding: 6px 20px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       grid-gap: 10px;
       button {
         cursor: pointer;
