@@ -94,6 +94,9 @@ body {
       button {
         cursor: pointer;
         padding: 6px;
+        &.hidden {
+          display: none;
+        }
       }
     }
   }

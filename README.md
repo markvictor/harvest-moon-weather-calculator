@@ -49,6 +49,8 @@ Features I intend to add in the near future:
 - [ ] Set up data storage for crop list persistence across sessions / devices
 - [ ] Add crop images/icons next to name
 - [ ] Add "Undo" button in case you accidentally hit a weather icon
+- [ ] Add all missing crop types
+- [ ] Mobile-specific: an anchor button to jump to the next crop and/or an overlaid navigation menu
 - [ ] General design improvements / optimizations
 
 Nice-to-have features that are lower priority:

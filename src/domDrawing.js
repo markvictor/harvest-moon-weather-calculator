@@ -48,9 +48,20 @@ const setCropText = function (divElement, divType, crop) {
   divElement.innerText = textTypes[divType];
 };
 
+const checkHarvestStatus = function (button, crop) {
+  if (crop.age.stage === "mature") {
+    button.classList.remove("hidden");
+  } else {
+    button.classList.add("hidden");
+  }
+};
+
 const updateCropDisplay = function (cropDiv, crop) {
   const stageSpan = cropDiv.querySelector(".growing-crop-stage");
   setCropText(stageSpan, "stage", crop);
+
+  const harvestButton = cropDiv.querySelector(".harvest-button");
+  checkHarvestStatus(harvestButton, crop);
 
   const daysSpan = cropDiv.querySelector(".growing-crop-days");
   setCropText(daysSpan, "days", crop);
@@ -93,6 +104,7 @@ const harvestCrop = function () {
     if (cropRegrows) {
       updateCropDisplay(cropToHarvest, cropRegrows);
     } else {
+      myCrops.removeCrop(cropToHarvest);
       removeCropFromPage(cropToHarvest);
     }
   }
@@ -104,6 +116,7 @@ const createNewCropButtons = function () {
   const cropScytheButton = createElementWithClass("button", "scythe-button");
 
   cropHarvestButton.innerText = "Harvest";
+  cropHarvestButton.classList.add("hidden");
   cropScytheButton.innerText = "Scythe";
 
   cropHarvestButton.addEventListener("click", harvestCrop);
