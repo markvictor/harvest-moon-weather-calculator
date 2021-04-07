@@ -23,10 +23,12 @@ const addCrop = function (event) {
   displayNewCrop(newCrop);
 };
 
-const weatherButtons = document.querySelectorAll(".weather-button img");
-weatherButtons.forEach((button) => {
-  button.addEventListener("click", findWeatherType);
-});
+const addListeners = (function () {
+  const weatherButtons = document.querySelectorAll(".weather-button img");
+  weatherButtons.forEach((button) => {
+    button.addEventListener("click", findWeatherType);
+  });
 
-const addCropForm = document.getElementById("add-crops-form");
-addCropForm.addEventListener("submit", (e) => addCrop(e));
+  const addCropForm = document.getElementById("add-crops-form");
+  addCropForm.addEventListener("submit", (e) => addCrop(e));
+})();

@@ -1,4 +1,5 @@
 import { myCrops } from "./trackCrops.js";
+import { allCrops } from "./cropslist.js";
 
 // const seasonTotals = (function () {
 //   let totalSun = 0;
@@ -171,5 +172,18 @@ const refreshCurrentCrops = function () {
     updateCropDisplay(cropDiv, crop);
   });
 };
+
+const addNewCropSelections = (function () {
+  const newCropSelector = document.getElementById("new-crop-dropdown");
+  if (newCropSelector) {
+    for (let crop in allCrops) {
+      let option = document.createElement("option");
+      option.value = crop;
+      option.setAttribute("name", crop);
+      option.innerText = crop;
+      newCropSelector.appendChild(option);
+    }
+  }
+})();
 
 export { displayNewCrop, refreshCurrentCrops };

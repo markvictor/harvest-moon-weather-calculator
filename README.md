@@ -43,7 +43,7 @@ If you want to harvest a crop from your list, click the "Harvest" button. If a c
 
 Features I intend to add in the near future:
 
-- [ ] Hide "Harvest" button unless a crop is _mature_
+- [x] Hide "Harvest" button unless a crop is _mature_
 - [ ] Auto-populate dropdown form based on [cropslist.js](src/cropslist.js) list (generate with JS and remove hard-coded HTML)
 - [ ] Add "Water" button to crops so you can track additional water applied via watering can
 - [ ] Set up data storage for crop list persistence across sessions / devices
