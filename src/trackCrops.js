@@ -40,7 +40,7 @@ const createNewCrop = function (type) {
   const cropType = allCrops[type];
   const newCrop = new cropType();
   myCrops.addCrop(newCrop);
-  console.log(myCrops.getCrops());
+
   return newCrop;
 };
 

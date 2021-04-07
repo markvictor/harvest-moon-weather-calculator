@@ -319,6 +319,163 @@ class Pineapple extends Crop {
   }
 }
 
+class Eggplant extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 3,
+        sun: { min: 5, max: 22 },
+        water: { min: 3, max: 11 },
+      },
+      {
+        stage: "sprout",
+        days: 3,
+        sun: { min: 8, max: 24 },
+        water: { min: 4, max: 13 },
+      },
+      {
+        stage: "sprout2",
+        days: 3,
+        sun: { min: 8, max: 24 },
+        water: { min: 3, max: 15 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 19 },
+        water: { max: 9 },
+      }
+    );
+    this._regrow = "sprout2";
+  }
+}
+
+class Carrot extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 3,
+        sun: { min: 5, max: 19 },
+        water: { min: 3, max: 11 },
+      },
+      {
+        stage: "sprout",
+        days: 4,
+        sun: { min: 6, max: 24 },
+        water: { min: 4, max: 15 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 14 },
+        water: { max: 3 },
+      }
+    );
+  }
+}
+
+class Yam extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 1,
+        sun: { min: 2, max: 5 },
+        water: { min: 1, max: 7 },
+      },
+      {
+        stage: "sprout",
+        days: 2,
+        sun: { min: 3, max: 11 },
+        water: { min: 1, max: 3 },
+      },
+      {
+        stage: "sprout2",
+        days: 2,
+        sun: { min: 3, max: 9 },
+        water: { min: 1, max: 3 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 14 },
+        water: { max: 3 },
+      }
+    );
+    this._regrow = "sprout2";
+  }
+}
+
+class Spinach extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 2,
+        sun: { min: 2, max: 9 },
+        water: { min: 2, max: 7 },
+      },
+      {
+        stage: "sprout",
+        days: 3,
+        sun: { min: 3, max: 11 },
+        water: { min: 2, max: 7 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 9 },
+        water: { max: 3 },
+      }
+    );
+  }
+}
+
+class BellPepper extends Crop {
+  constructor() {
+    super();
+    this._ages.unshift(
+      {
+        stage: "seed",
+        days: 2,
+        sun: { min: 5, max: 17 },
+        water: { min: 2, max: 9 },
+      },
+      {
+        stage: "sprout",
+        days: 1,
+        sun: { min: 3, max: 9 },
+        water: { min: 1, max: 5 },
+      },
+      {
+        stage: "sprout2",
+        days: 2,
+        sun: { min: 4, max: 11 },
+        water: { min: 2, max: 15 },
+      },
+      {
+        stage: "sprout3",
+        days: 2,
+        sun: { min: 4, max: 11 },
+        water: { min: 1, max: 15 },
+      },
+      {
+        stage: "mature",
+        days: 10,
+        sun: { max: 19 },
+        water: { max: 9 },
+      }
+    );
+    this._regrow = "sprout3";
+  }
+}
+
 const allCrops = {
   Turnip,
   Potato,
@@ -330,6 +487,11 @@ const allCrops = {
   Onion,
   Pumpkin,
   Pineapple,
+  Eggplant,
+  Carrot,
+  Yam,
+  Spinach,
+  BellPepper,
 };
 
 export { Crop, allCrops };

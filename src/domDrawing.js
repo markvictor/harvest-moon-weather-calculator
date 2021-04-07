@@ -37,9 +37,22 @@ const createElementWithClass = function (type, className) {
   return newElement;
 };
 
+const addSpaces = function (phrase) {
+  let letters = phrase.split("");
+  let uppercase = letters.slice(1).find((letter) => letter.match(/[A-Z]/));
+
+  if (uppercase) {
+    let upperCaseIndex = letters.slice(1).indexOf(uppercase);
+    letters.splice(upperCaseIndex + 1, 0, " ");
+    return letters.join("");
+  } else {
+    return phrase;
+  }
+};
+
 const setCropText = function (divElement, divType, crop) {
   const textTypes = {
-    name: `${crop.constructor.name}`,
+    name: `${addSpaces(crop.constructor.name)}`,
     stage: `Stage: ${crop.age.stage}`,
     days: `${crop.daysNeeded}`,
     water: `${crop.waterNeeded}`,
@@ -180,7 +193,8 @@ const addNewCropSelections = (function () {
       let option = document.createElement("option");
       option.value = crop;
       option.setAttribute("name", crop);
-      option.innerText = crop;
+
+      option.innerText = addSpaces(crop);
       newCropSelector.appendChild(option);
     }
   }

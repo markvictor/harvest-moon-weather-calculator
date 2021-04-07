@@ -44,12 +44,13 @@ If you want to harvest a crop from your list, click the "Harvest" button. If a c
 Features I intend to add in the near future:
 
 - [x] Hide "Harvest" button unless a crop is _mature_
-- [ ] Auto-populate dropdown form based on [cropslist.js](src/cropslist.js) list (generate with JS and remove hard-coded HTML)
+- [x] Auto-populate dropdown form based on [cropslist.js](src/cropslist.js) list (generate with JS and remove hard-coded HTML)
 - [ ] Add "Water" button to crops so you can track additional water applied via watering can
 - [ ] Set up data storage for crop list persistence across sessions / devices
 - [ ] Add crop images/icons next to name
 - [ ] Add "Undo" button in case you accidentally hit a weather icon
-- [ ] Add all missing crop types
+- [x] Add all missing crop types (except trees and grains)
+- [ ] Separate crops by season
 - [ ] Mobile-specific: an anchor button to jump to the next crop and/or an overlaid navigation menu
 - [ ] General design improvements / optimizations
 
@@ -57,6 +58,7 @@ Nice-to-have features that are lower priority:
 
 - [ ] Add a separate crop list for Greenhouse crops that is not affected by weather buttons and has sunstone buttons instead (crops in the Greenhouse are not impacted by outside weather and get their **sun** points from the sunstones you store inside; the only water they receive is from your watering can)
 - [ ] Add stage icons next to crop stage that change based on growth level
+- [ ] Add trees and grains
 - [ ] Make crop separator / border change length based on how much water a crop has received for a given stage, acting as a progress bar (and add a "sun" border that provides the same view / changes based on sun points)
 - [ ] Add animation when pressing buttons: water sprinkle or sunshine or snow flurries, etc.
 - [ ] Allow "equipping" yellow wonderfuls to make the "Water" button add more water with each press (wonderfuls are in-game stones you can slot into equipment: the yellow version make your watering can more "powerful" and apply more water points with each watering can usage)
