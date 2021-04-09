@@ -5,7 +5,6 @@ const myCrops = (function () {
 
   const getCrops = () => crops;
   const addCrop = (crop) => crops.push(crop);
-
   const findCropFromDOM = (crop) => {
     const arrayCrop = crops.find(
       (veg) => veg.id === Number(crop.getAttribute("data-id"))

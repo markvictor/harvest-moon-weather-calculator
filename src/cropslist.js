@@ -494,4 +494,4 @@ const allCrops = {
   BellPepper,
 };
 
-export { Crop, allCrops };
+export { allCrops };
