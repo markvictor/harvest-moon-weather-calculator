@@ -1,35 +1,6 @@
 import { myCrops } from "./trackCrops.js";
 import { allCrops } from "./cropslist.js";
 
-// const seasonTotals = (function () {
-//   let totalSun = 0;
-//   let totalWater = 0;
-
-//   const getSun = () => totalSun;
-//   const getWater = () => totalWater;
-
-//   const increaseTotals = function (amounts) {
-//     totalSun += amounts.sun;
-//     totalWater += amounts.water;
-//   };
-
-//   return { getSun, getWater, increaseTotals };
-// })();
-
-// const updateTotals = function () {
-//   document.getElementById(
-//     "sun-points-total"
-//   ).textContent = seasonTotals.getSun();
-//   document.getElementById(
-//     "water-points-total"
-//   ).textContent = seasonTotals.getWater();
-// };
-
-// const addWeatherToTotal = function (weather) {
-//   seasonTotals.increaseTotals(weather);
-//   updateTotals();
-// };
-
 const createElementWithClass = function (type, className) {
   const newElement = document.createElement(type);
   newElement.classList.add(className);

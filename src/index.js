@@ -1,8 +1,9 @@
 require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
 import "./style.scss";
 import { displayNewCrop, refreshCurrentCrops } from "./domDrawing.js";
-import { addWeatherToCrops, createNewCrop } from "./trackCrops.js";
+import { myCrops, addWeatherToCrops, createNewCrop } from "./trackCrops.js";
 import { weatherTypes } from "./weathertypes.js";
+import { cropId } from "./crop.js";
 
 const findWeatherType = function () {
   const button = this.closest(".weather-button");
@@ -11,7 +12,6 @@ const findWeatherType = function () {
     (type) => type.weather === button.getAttribute("data-weather")
   );
 
-  // addWeatherToTotal(chosenWeather);
   addWeatherToCrops(chosenWeather);
   refreshCurrentCrops();
 };
@@ -32,3 +32,45 @@ const addListeners = (function () {
   const addCropForm = document.getElementById("add-crops-form");
   addCropForm.addEventListener("submit", (e) => addCrop(e));
 })();
+
+function storageAvailable(type) {
+  var storage;
+  try {
+    storage = window[type];
+    var x = "__storage_test__";
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return (
+      e instanceof DOMException &&
+      // everything except Firefox
+      (e.code === 22 ||
+        // Firefox
+        e.code === 1014 ||
+        // test name field too, because code might not be present
+        // everything except Firefox
+        e.name === "QuotaExceededError" ||
+        // Firefox
+        e.name === "NS_ERROR_DOM_QUOTA_REACHED") &&
+      // acknowledge QuotaExceededError only if there's something already stored
+      storage &&
+      storage.length !== 0
+    );
+  }
+}
+
+if (storageAvailable("localStorage")) {
+  let storedCropsList = localStorage.getItem("localMyCrops");
+  let localId = localStorage.getItem("localCropId");
+
+  if (storedCropsList) {
+    myCrops.replaceWithLocalCrops(storedCropsList);
+    for (let crop of myCrops.getCrops()) {
+      displayNewCrop(crop);
+    }
+    if (localId) {
+      cropId.updateIdWithLocal(localId);
+    }
+  }
+}

@@ -1,26 +1,37 @@
 const cropId = (function () {
   let id = 0;
 
+  const setLocalId = () => {
+    localStorage.setItem("localCropId", JSON.stringify(id));
+  };
+
   const getNewId = () => {
     id++;
+    setLocalId();
     return id;
   };
 
-  return { getNewId };
+  const updateIdWithLocal = (num) => {
+    id = Number(num);
+  };
+
+  return { getNewId, updateIdWithLocal };
 })();
 
 class Crop {
-  constructor() {
-    this._totalDays = 0;
-    this._totalWater = 0;
-    this._totalSun = 0;
+  constructor(veggieObject) {
+    // If we're instantiating with an existing veggieObject,
+    // set starting values equal to the object's values
+    this._totalDays = veggieObject._totalDays || 0;
+    this._totalWater = veggieObject._totalWater || 0;
+    this._totalSun = veggieObject._totalSun || 0;
     this._ages = [
       {
         stage: "withered",
       },
     ];
-    this._currentAge = 0;
-    this._id = cropId.getNewId();
+    this._currentAge = veggieObject._currentAge || 0;
+    this._id = veggieObject._id || cropId.getNewId();
     this._regrow = false;
   }
 
@@ -162,4 +173,4 @@ class Crop {
   }
 }
 
-export { Crop };
+export { cropId, Crop };

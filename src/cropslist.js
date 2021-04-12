@@ -1,8 +1,9 @@
 import { Crop } from "./crop.js";
 
 class Turnip extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Turnip";
     this._ages.unshift(
       {
         stage: "seed",
@@ -27,8 +28,9 @@ class Turnip extends Crop {
 }
 
 class Potato extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Potato";
     this._ages.unshift(
       {
         stage: "seed",
@@ -53,8 +55,9 @@ class Potato extends Crop {
 }
 
 class Cucumber extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Cucumber";
     this._ages.unshift(
       {
         stage: "seed",
@@ -86,8 +89,9 @@ class Cucumber extends Crop {
 }
 
 class Cabbage extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Cabbage";
     this._ages.unshift(
       {
         stage: "seed",
@@ -118,8 +122,9 @@ class Cabbage extends Crop {
 }
 
 class Strawberry extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Strawberry";
     this._ages.unshift(
       {
         stage: "seed",
@@ -151,8 +156,9 @@ class Strawberry extends Crop {
 }
 
 class Tomato extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Tomato";
     this._ages.unshift(
       {
         stage: "seed",
@@ -190,8 +196,9 @@ class Tomato extends Crop {
 }
 
 class Corn extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Corn";
     this._ages.unshift(
       {
         stage: "seed",
@@ -229,8 +236,9 @@ class Corn extends Crop {
 }
 
 class Onion extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Onion";
     this._ages.unshift(
       {
         stage: "seed",
@@ -255,8 +263,9 @@ class Onion extends Crop {
 }
 
 class Pumpkin extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Pumpkin";
     this._ages.unshift(
       {
         stage: "seed",
@@ -287,8 +296,9 @@ class Pumpkin extends Crop {
 }
 
 class Pineapple extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Pineapple";
     this._ages.unshift(
       {
         stage: "seed",
@@ -320,8 +330,9 @@ class Pineapple extends Crop {
 }
 
 class Eggplant extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Eggplant";
     this._ages.unshift(
       {
         stage: "seed",
@@ -353,8 +364,9 @@ class Eggplant extends Crop {
 }
 
 class Carrot extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Carrot";
     this._ages.unshift(
       {
         stage: "seed",
@@ -379,8 +391,9 @@ class Carrot extends Crop {
 }
 
 class Yam extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Yam";
     this._ages.unshift(
       {
         stage: "seed",
@@ -412,8 +425,9 @@ class Yam extends Crop {
 }
 
 class Spinach extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "Spinach";
     this._ages.unshift(
       {
         stage: "seed",
@@ -438,8 +452,9 @@ class Spinach extends Crop {
 }
 
 class BellPepper extends Crop {
-  constructor() {
-    super();
+  constructor(veggieObject = {}) {
+    super(veggieObject);
+    this.cropType = "BellPepper";
     this._ages.unshift(
       {
         stage: "seed",

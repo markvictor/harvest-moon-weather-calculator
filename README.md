@@ -37,7 +37,7 @@ If you want to remove a crop from your list -- for example, one you added by mis
 
 If you want to harvest a crop from your list, click the "Harvest" button. If a crop does not regrow, this is essentially identical to using "Scythe" to remove a crop. However, if a crop regrows upon harvesting (like strawberries or cucumbers), then clicking "Harvest" will reset the crop to its regrowth stage and allow you to continue tracking its required points. At the moment the "Harvest" button is always available, but in the future it will only show up if a crop is at its _mature_ stage, which could serve as a helpful reminder of what crops you can harvest that day.
 
-**Note: data storage is not implemented yet, so refreshing the page or exiting the browser will reset all crop data.**
+**Note: crop data is currently maintained in LocalStorage, so it will only persist on the same device & browser.**
 
 ## Future Features
 
@@ -46,7 +46,7 @@ Features I intend to add in the near future:
 - [x] Hide "Harvest" button unless a crop is _mature_
 - [x] Auto-populate dropdown form based on [cropslist.js](src/cropslist.js) list (generate with JS and remove hard-coded HTML)
 - [x] Add "Water" button to crops so you can track additional water applied via watering can
-- [ ] Set up data storage for crop list persistence across sessions / devices
+- [x] Set up data storage for crop list persistence across sessions ~~/ devices~~
 - [ ] Add crop images/icons next to name
 - [ ] Add "Undo" button in case you accidentally hit a weather icon
 - [x] Add all missing crop types (except trees and grains)
