@@ -509,4 +509,10 @@ const allCrops = {
   BellPepper,
 };
 
-export { allCrops };
+const seasonalCrops = {
+  Spring: ["Turnip", "Potato", "Cucumber", "Cabbage", "Strawberry"],
+  Summer: ["Tomato", "Corn", "Onion", "Pumpkin", "Pineapple"],
+  Fall: ["Eggplant", "Carrot", "Yam", "Spinach", "BellPepper"],
+};
+
+export { allCrops, seasonalCrops };

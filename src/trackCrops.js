@@ -30,6 +30,7 @@ const myCrops = (function () {
       return false;
     } else {
       cropToCheck.regrowCrop();
+      setLocalCrops();
       return cropToCheck;
     }
   };
@@ -70,8 +71,8 @@ const addWeatherToCrops = function (weather) {
 };
 
 const createNewCrop = function (type) {
-  const cropType = allCrops[type];
-  const newCrop = new cropType();
+  const cropSpecies = allCrops[type];
+  const newCrop = new cropSpecies();
   myCrops.addCrop(newCrop);
   myCrops.setLocalCrops();
 

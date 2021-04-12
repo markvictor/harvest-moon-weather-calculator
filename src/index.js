@@ -1,6 +1,11 @@
 require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
 import "./style.scss";
-import { displayNewCrop, refreshCurrentCrops } from "./domDrawing.js";
+import {
+  displayNewCrop,
+  refreshCurrentCrops,
+  addNewCropSelections,
+  updateDropdownOptions,
+} from "./domDrawing.js";
 import { myCrops, addWeatherToCrops, createNewCrop } from "./trackCrops.js";
 import { weatherTypes } from "./weathertypes.js";
 import { cropId } from "./crop.js";
@@ -31,6 +36,13 @@ const addListeners = function () {
 
   const addCropForm = document.getElementById("add-crops-form");
   addCropForm.addEventListener("submit", (e) => addCrop(e));
+
+  const addCropRadioButtons = addCropForm.querySelectorAll(
+    'input[name="season"]'
+  );
+  addCropRadioButtons.forEach((button) =>
+    button.addEventListener("change", updateDropdownOptions)
+  );
 };
 
 // LocalStorage test from MDN
@@ -83,6 +95,7 @@ const launchApp = (function () {
 
   if (calculator) {
     addListeners();
+    addNewCropSelections("Spring");
     checkStorage();
   }
 })();

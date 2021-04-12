@@ -47,9 +47,35 @@
       <!-- <button id="weather-buttons-undo">Undo last weather</button> -->
     </div>
     <div id="add-crops" class="limited-container">
-      <form id="add-crops-form">
+      <form id="add-crops-form" autocomplete="off">
         <label for="new-crop-dropdown">Add a crop:</label>
-        <br />
+        <div class="season-radio-buttons">
+          <label for="spring"
+            ><input
+              type="radio"
+              id="spring"
+              name="season"
+              value="Spring"
+              checked
+            />Spring</label
+          >
+          <label for="summer"
+            ><input
+              type="radio"
+              id="summer"
+              name="season"
+              value="Summer"
+            />Summer</label
+          >
+          <label for="fall"
+            ><input
+              type="radio"
+              id="fall"
+              name="season"
+              value="Fall"
+            />Fall</label
+          >
+        </div>
         <select name="type" id="new-crop-dropdown"></select>
         <input type="submit" value="Add" />
       </form>

@@ -1,5 +1,5 @@
 import { myCrops } from "./trackCrops.js";
-import { allCrops } from "./cropslist.js";
+import { allCrops, seasonalCrops } from "./cropslist.js";
 
 const createElementWithClass = function (type, className) {
   const newElement = document.createElement(type);
@@ -168,10 +168,15 @@ const refreshCurrentCrops = function () {
   });
 };
 
-const addNewCropSelections = (function () {
-  const newCropSelector = document.getElementById("new-crop-dropdown");
+const getAddCropDropdown = function () {
+  return document.getElementById("new-crop-dropdown");
+};
+
+const addNewCropSelections = function (season) {
+  const newCropSelector = getAddCropDropdown();
   if (newCropSelector) {
-    for (let crop in allCrops) {
+    let cropsToDisplay = seasonalCrops[season];
+    for (let crop of cropsToDisplay) {
       let option = document.createElement("option");
       option.value = crop;
       option.setAttribute("name", crop);
@@ -180,6 +185,22 @@ const addNewCropSelections = (function () {
       newCropSelector.appendChild(option);
     }
   }
-})();
+};
 
-export { displayNewCrop, refreshCurrentCrops };
+const updateDropdownOptions = function () {
+  const newCropSelector = getAddCropDropdown();
+  if (newCropSelector) {
+    while (newCropSelector.lastChild) {
+      newCropSelector.removeChild(newCropSelector.lastChild);
+    }
+  }
+
+  addNewCropSelections(this.value);
+};
+
+export {
+  displayNewCrop,
+  refreshCurrentCrops,
+  addNewCropSelections,
+  updateDropdownOptions,
+};
