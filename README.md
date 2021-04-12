@@ -50,7 +50,7 @@ Features I intend to add in the near future:
 - [ ] Add crop images/icons next to name
 - [ ] Add "Undo" button in case you accidentally hit a weather icon
 - [x] Add all missing crop types (except trees and grains)
-- [ ] Separate crops by season
+- [x] Separate crops by season
 - [ ] Mobile-specific: an anchor button to jump to the next crop and/or an overlaid navigation menu
 - [ ] General design improvements / optimizations
 

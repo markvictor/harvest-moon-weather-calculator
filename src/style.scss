@@ -64,10 +64,13 @@ body {
   text-align: center;
   @include container-padding;
   .season-radio-buttons {
-    display: grid;
-    grid-template-columns: 1fr;
-    @media only screen and (min-width: 900px) {
-      grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-direction: column;
+    @media only screen and (min-width: 678px) {
+      display: block;
+      label {
+        padding: 10px;
+      }
     }
   }
 }
