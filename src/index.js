@@ -23,7 +23,7 @@ const addCrop = function (event) {
   displayNewCrop(newCrop);
 };
 
-const addListeners = (function () {
+const addListeners = function () {
   const weatherButtons = document.querySelectorAll(".weather-button img");
   weatherButtons.forEach((button) => {
     button.addEventListener("click", findWeatherType);
@@ -31,9 +31,10 @@ const addListeners = (function () {
 
   const addCropForm = document.getElementById("add-crops-form");
   addCropForm.addEventListener("submit", (e) => addCrop(e));
-})();
+};
 
-function storageAvailable(type) {
+// LocalStorage test from MDN
+const storageAvailable = function (type) {
   var storage;
   try {
     storage = window[type];
@@ -58,19 +59,30 @@ function storageAvailable(type) {
       storage.length !== 0
     );
   }
-}
+};
 
-if (storageAvailable("localStorage")) {
-  let storedCropsList = localStorage.getItem("localMyCrops");
-  let localId = localStorage.getItem("localCropId");
+const checkStorage = function () {
+  if (storageAvailable("localStorage")) {
+    let storedCropsList = localStorage.getItem("localMyCrops");
+    let storedCropId = localStorage.getItem("localCropId");
 
-  if (storedCropsList) {
-    myCrops.replaceWithLocalCrops(storedCropsList);
-    for (let crop of myCrops.getCrops()) {
-      displayNewCrop(crop);
-    }
-    if (localId) {
-      cropId.updateIdWithLocal(localId);
+    if (storedCropsList) {
+      myCrops.replaceWithLocalCrops(storedCropsList);
+      for (let crop of myCrops.getCrops()) {
+        displayNewCrop(crop);
+      }
+      if (storedCropId) {
+        cropId.updateIdWithLocal(storedCropId);
+      }
     }
   }
-}
+};
+
+const launchApp = (function () {
+  const calculator = document.getElementById("calculator-body");
+
+  if (calculator) {
+    addListeners();
+    checkStorage();
+  }
+})();

@@ -41,6 +41,8 @@ class Crop {
 
   increaseWater(water) {
     this._totalWater += water;
+
+    this.checkStatus();
   }
 
   increaseSun(sun) {
@@ -110,10 +112,8 @@ class Crop {
 
   nextDay(weather) {
     this.increaseDays();
-    this.increaseWater(weather.water);
     this.increaseSun(weather.sun);
-
-    this.checkStatus();
+    this.increaseWater(weather.water);
   }
 
   resetTotals() {
