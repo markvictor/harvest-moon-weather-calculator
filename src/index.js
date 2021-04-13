@@ -34,6 +34,17 @@ const addCrop = function (event) {
   displayNewCrop(newCrop);
 };
 
+const slideCropForm = function (button) {
+  const form = document.getElementById("add-crops");
+  form.classList.toggle("hidden");
+
+  if (form.classList.contains("hidden")) {
+    button.target.innerText = "+";
+  } else {
+    button.target.innerText = "-";
+  }
+};
+
 const addListeners = function () {
   const weatherButtons = document.querySelectorAll(".weather-button img");
   weatherButtons.forEach((button) => {
@@ -48,6 +59,9 @@ const addListeners = function () {
 
   const addCropForm = document.getElementById("add-crops-form");
   addCropForm.addEventListener("submit", (e) => addCrop(e));
+
+  const addCropReveal = document.getElementById("add-crops-reveal");
+  addCropReveal.addEventListener("click", (e) => slideCropForm(e));
 
   const addCropRadioButtons = addCropForm.querySelectorAll(
     'input[name="season"]'

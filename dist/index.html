@@ -46,7 +46,8 @@
       </div>
       <button id="weather-buttons-undo">Undo last day</button>
     </div>
-    <div id="add-crops" class="limited-container">
+    <div id="add-crops" class="limited-container hidden">
+      <div id="add-crops-reveal">+</div>
       <form id="add-crops-form" autocomplete="off">
         <label for="new-crop-dropdown">Add a crop:</label>
         <div class="season-radio-buttons">
@@ -76,10 +77,10 @@
             />Fall</label
           >
         </div>
-        <select name="type" id="new-crop-dropdown"></select>
-        <input type="submit" value="Add" />
-        <br />
-        <br />
+        <div class="select-crop-box">
+          <select name="type" id="new-crop-dropdown"></select>
+          <input type="submit" value="Add" />
+        </div>
         <input
           type="checkbox"
           id="apply-days-weather"

@@ -61,17 +61,45 @@ body {
 }
 
 #add-crops {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 75vw;
+  width: 600px;
   text-align: center;
+  background-color: gray;
+  z-index: 30;
+  border-radius: 0px 6px 6px 0px;
   @include container-padding;
+  &.hidden {
+    transform: translateX(-100%);
+  }
+  label {
+    margin-top: 10px;
+  }
+  #add-crops-reveal {
+    position: absolute;
+    top: 0;
+    right: -34px;
+    width: 40px;
+    min-width: max-content;
+    cursor: pointer;
+    background-color: gray;
+    border-radius: 0px 6px 6px 0px;
+  }
   .season-radio-buttons {
     display: flex;
     flex-direction: column;
     @media only screen and (min-width: 678px) {
-      display: block;
+      flex-direction: row;
+      justify-content: center;
       label {
         padding: 10px;
       }
     }
+  }
+  .select-crop-box {
+    margin: 20px 0px;
   }
 }
 

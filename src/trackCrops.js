@@ -6,7 +6,7 @@ const trackWeatherButtonPressed = (function () {
   const setLocalLastWeather = () => {
     localStorage.setItem(
       "localLastWeatherPressed",
-      JSON.stringify(lastWeather)
+      JSON.stringify(lastWeather[0])
     );
   };
 
