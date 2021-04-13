@@ -6,7 +6,12 @@ import {
   addNewCropSelections,
   updateDropdownOptions,
 } from "./domDrawing.js";
-import { myCrops, addWeatherToCrops, createNewCrop } from "./trackCrops.js";
+import {
+  myCrops,
+  addWeatherToCrops,
+  trackWeatherButtonPressed,
+  createNewCrop,
+} from "./trackCrops.js";
 import { weatherTypes } from "./weathertypes.js";
 import { cropId } from "./crop.js";
 
@@ -18,6 +23,7 @@ const findWeatherType = function () {
   );
 
   addWeatherToCrops(chosenWeather);
+  trackWeatherButtonPressed.weatherButton(chosenWeather);
   refreshCurrentCrops();
 };
 
@@ -33,6 +39,12 @@ const addListeners = function () {
   weatherButtons.forEach((button) => {
     button.addEventListener("click", findWeatherType);
   });
+
+  const undoWeatherButton = document.getElementById("weather-buttons-undo");
+  undoWeatherButton.addEventListener(
+    "click",
+    trackWeatherButtonPressed.undoLastWeather
+  );
 
   const addCropForm = document.getElementById("add-crops-form");
   addCropForm.addEventListener("submit", (e) => addCrop(e));
@@ -77,6 +89,7 @@ const checkStorage = function () {
   if (storageAvailable("localStorage")) {
     let storedCropsList = localStorage.getItem("localMyCrops");
     let storedCropId = localStorage.getItem("localCropId");
+    let storedWeatherSelected = localStorage.getItem("localLastWeatherPressed");
 
     if (storedCropsList) {
       myCrops.replaceWithLocalCrops(storedCropsList);
@@ -85,6 +98,9 @@ const checkStorage = function () {
       }
       if (storedCropId) {
         cropId.updateIdWithLocal(storedCropId);
+      }
+      if (storedWeatherSelected) {
+        trackWeatherButtonPressed.getLocalLastWeather(storedWeatherSelected);
       }
     }
   }

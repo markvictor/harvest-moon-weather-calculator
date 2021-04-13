@@ -11,8 +11,8 @@ This project is a work-in-progress: see the [Future Features](#future-features) 
 The buttons at the top of the calculator utilize the weather icons used in-game and correspond to the matching amount of **water**/**sun** points a given weather type will provide (available in [weathertypes.js](src/weathertypes.js)):
 
 - Sunny: 3 **sun** & 0 **water**
-- Clear: 1 **sun** & 0 **water**
-- Cloudy: 0 **sun** & 0 **water**
+- Clear: 2 **sun** & 0 **water**
+- Cloudy: 1 **sun** & 0 **water**
 - Drizzle: 0 **sun** & 1 **water**
 - Rainy: 0 **sun** & 2 **water**
 - Snowy: 0 **sun** & 3 **water**

@@ -6,12 +6,12 @@ const weatherTypes = [
   },
   {
     weather: "clear",
-    sun: 1,
+    sun: 2,
     water: 0,
   },
   {
     weather: "cloudy",
-    sun: 0,
+    sun: 1,
     water: 0,
   },
   {

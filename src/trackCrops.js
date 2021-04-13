@@ -1,5 +1,36 @@
 import { allCrops } from "./cropslist.js";
 
+const trackWeatherButtonPressed = (function () {
+  let lastWeather;
+
+  const setLocalLastWeather = () => {
+    localStorage.setItem(
+      "localLastWeatherPressed",
+      JSON.stringify(lastWeather)
+    );
+  };
+
+  const getLocalLastWeather = (storedWeather) => {
+    let localWeather = JSON.parse(storedWeather);
+    lastWeather = localWeather;
+  };
+
+  const weatherButton = (weather) => {
+    lastWeather = weather;
+    setLocalLastWeather();
+  };
+
+  const getLastWeather = () => lastWeather;
+  const undoLastWeather = () => console.log(lastWeather);
+
+  return {
+    weatherButton,
+    getLastWeather,
+    undoLastWeather,
+    getLocalLastWeather,
+  };
+})();
+
 const myCrops = (function () {
   let crops = [];
 
@@ -8,7 +39,19 @@ const myCrops = (function () {
   };
 
   const getCrops = () => crops;
-  const addCrop = (crop) => crops.push(crop);
+
+  const addCrop = (crop) => {
+    const todaysWeather = trackWeatherButtonPressed.getLastWeather();
+    const applyWeatherCheck = document.getElementById("apply-days-weather")
+      .checked;
+
+    if (applyWeatherCheck && todaysWeather) {
+      crop.increaseWater(todaysWeather.water);
+      crop.increaseSun(todaysWeather.sun);
+    }
+
+    crops.push(crop);
+  };
 
   const findCropFromDOM = (crop) => {
     const arrayCrop = crops.find(
@@ -79,4 +122,4 @@ const createNewCrop = function (type) {
   return newCrop;
 };
 
-export { addWeatherToCrops, createNewCrop, myCrops };
+export { addWeatherToCrops, trackWeatherButtonPressed, createNewCrop, myCrops };
