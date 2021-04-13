@@ -31,7 +31,7 @@ The values required by each crop type and its stages are stored in [cropslist.js
 
 To add a crop to your crop list, pick the crop type from the dropdown positioned below the calculator buttons and hit "Add." Currently, crops are listed in the order they are added, but a possible future feature will allow you to choose crops' "placement."
 
-To add a new day and its' respective weather points to all current crops, click the button that corresponds to the type of weather you're experiencing in-game. At the moment there is no undo button if you accidentally hit a weather button, but I plan to add one in the future.
+To add a new day and its' respective weather points to all current crops, click the button that corresponds to the type of weather you're experiencing in-game. ~~At the moment there is no undo button if you accidentally hit a weather button, but I plan to add one in the future.~~ An undo button has been added, but it is only used for undoing a single day. The undo function stores a crop's points totals when a day button is pressed: if you hit undo, it reverts to those stored totals. This means if you press a weather button, then add water to an individual crop, then hit undo, the crop will be reset to the previous day's totals and the separate water you applied will also be removed. Brand new crops planted that day will not be affected. This is my preferred functionality as the button is meant to be used "in case of" accidental press, not to undo or backtrack across multiple days.
 
 If you want to remove a crop from your list -- for example, one you added by mistake or one that is withered -- click the "Scythe" button.
 
@@ -48,7 +48,7 @@ Features I intend to add in the near future:
 - [x] Add "Water" button to crops so you can track additional water applied via watering can
 - [x] Set up data storage for crop list persistence across sessions ~~/ devices~~
 - [ ] Add crop images/icons next to name
-- [ ] Add "Undo" button in case you accidentally hit a weather icon
+- [x] Add "Undo" button in case you accidentally hit a weather icon
 - [x] Add all missing crop types (except trees and grains)
 - [x] Separate crops by season
 - [ ] Mobile-specific: an anchor button to jump to the next crop and/or an overlaid navigation menu

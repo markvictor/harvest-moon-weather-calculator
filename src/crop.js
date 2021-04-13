@@ -33,6 +33,7 @@ class Crop {
     this._currentAge = veggieObject._currentAge || 0;
     this._id = veggieObject._id || cropId.getNewId();
     this._regrow = false;
+    this._previousTotals; // Used only for "undo last day" button
   }
 
   increaseDays() {
@@ -109,6 +110,13 @@ class Crop {
   /* End of DOM display get methods */
 
   nextDay(weather) {
+    this._previousTotals = [
+      this._currentAge,
+      this._totalDays,
+      this._totalWater,
+      this._totalSun,
+    ];
+
     this.increaseDays();
     this.increaseSun(weather.sun);
     this.increaseWater(weather.water);
@@ -142,6 +150,20 @@ class Crop {
     // this will allow us to change the order of ages if we want to in the future
     let witheredStage = this._ages.find((age) => age.stage === "withered");
     this._currentAge = this._ages.indexOf(witheredStage);
+  }
+
+  removeLastDay() {
+    // When "undo last day" button is pressed
+
+    // Return to previous day's totals if they exist
+    if (this._previousTotals) {
+      [
+        this._currentAge,
+        this._totalDays,
+        this._totalWater,
+        this._totalSun,
+      ] = this._previousTotals;
+    }
   }
 
   checkStatus() {

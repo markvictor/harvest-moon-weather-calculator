@@ -41,10 +41,10 @@ const addListeners = function () {
   });
 
   const undoWeatherButton = document.getElementById("weather-buttons-undo");
-  undoWeatherButton.addEventListener(
-    "click",
-    trackWeatherButtonPressed.undoLastWeather
-  );
+  undoWeatherButton.addEventListener("click", () => {
+    myCrops.undoLastWeather();
+    refreshCurrentCrops();
+  });
 
   const addCropForm = document.getElementById("add-crops-form");
   addCropForm.addEventListener("submit", (e) => addCrop(e));

@@ -1,7 +1,7 @@
 import { allCrops } from "./cropslist.js";
 
 const trackWeatherButtonPressed = (function () {
-  let lastWeather;
+  let lastWeather = [];
 
   const setLocalLastWeather = () => {
     localStorage.setItem(
@@ -12,22 +12,23 @@ const trackWeatherButtonPressed = (function () {
 
   const getLocalLastWeather = (storedWeather) => {
     let localWeather = JSON.parse(storedWeather);
-    lastWeather = localWeather;
+    lastWeather[0] = localWeather;
   };
 
   const weatherButton = (weather) => {
-    lastWeather = weather;
+    lastWeather[0] = weather;
     setLocalLastWeather();
   };
 
-  const getLastWeather = () => lastWeather;
-  const undoLastWeather = () => console.log(lastWeather);
+  const getLastWeather = () => lastWeather[0];
+
+  const removeLastWeather = () => lastWeather.pop();
 
   return {
     weatherButton,
     getLastWeather,
-    undoLastWeather,
     getLocalLastWeather,
+    removeLastWeather,
   };
 })();
 
@@ -85,6 +86,15 @@ const myCrops = (function () {
     return cropToWater;
   };
 
+  const undoLastWeather = () => {
+    const weatherToUndo = trackWeatherButtonPressed.removeLastWeather();
+
+    if (weatherToUndo) {
+      crops.forEach((crop) => crop.removeLastDay());
+    }
+    setLocalCrops();
+  };
+
   const replaceWithLocalCrops = (cropsList) => {
     let newCropsList = [];
     let parsed = JSON.parse(cropsList);
@@ -103,6 +113,7 @@ const myCrops = (function () {
     removeCrop,
     checkRegrow,
     waterCrop,
+    undoLastWeather,
     replaceWithLocalCrops,
     setLocalCrops,
   };
