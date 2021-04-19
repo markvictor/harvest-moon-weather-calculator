@@ -6,6 +6,7 @@ import {
   addNewCropSelections,
   updateDropdownOptions,
   jumpToNextCrop,
+  returnToTop,
 } from "./domDrawing.js";
 import {
   myCrops,
@@ -73,6 +74,11 @@ const addListeners = function () {
 
   const cropAnchorButton = document.getElementById("next-crop-anchor");
   cropAnchorButton.addEventListener("click", jumpToNextCrop);
+
+  const weatherButtonsAnchorButton = document.getElementById(
+    "jump-to-weather-buttons"
+  );
+  weatherButtonsAnchorButton.addEventListener("click", returnToTop);
 };
 
 // LocalStorage test from MDN

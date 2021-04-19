@@ -221,10 +221,16 @@ const jumpToNextCrop = function () {
   window.scrollTo(0, newScrollDestination);
 };
 
+const returnToTop = function () {
+  const topOfCalculator = document.getElementById("calculator-body").offsetTop;
+  window.scrollTo(0, topOfCalculator);
+};
+
 export {
   displayNewCrop,
   refreshCurrentCrops,
   addNewCropSelections,
   updateDropdownOptions,
   jumpToNextCrop,
+  returnToTop,
 };

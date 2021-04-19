@@ -8,6 +8,20 @@ $font-gray: #333333;
   padding: 12px;
 }
 
+@mixin anchor-buttons {
+  position: fixed;
+  right: 0.25rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  background-size: 1rem;
+  z-index: 40;
+  @media only screen and (min-width: 900px) {
+    display: none;
+  }
+}
+
 @mixin overlaid-menu-shadow {
   -webkit-box-shadow: 0px 0px 10px 4px $light-gray;
   box-shadow: 0px 0px 10px 4px $light-gray;
@@ -50,20 +64,16 @@ body {
   max-width: 1200px;
 }
 
+#jump-to-weather-buttons {
+  bottom: 2.5rem;
+  background: $dirt-brown url("../images/up-arrow.png") no-repeat center;
+  @include anchor-buttons;
+}
+
 #next-crop-anchor {
-  position: fixed;
   bottom: 0.25rem;
-  right: 0.25rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  border-radius: 50%;
   background: $dirt-brown url("../images/down-arrow.png") no-repeat center;
-  background-size: 1rem;
-  z-index: 40;
-  @media only screen and (min-width: 900px) {
-    display: none;
-  }
+  @include anchor-buttons;
 }
 
 #calculator-body {
