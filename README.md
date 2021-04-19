@@ -51,8 +51,8 @@ Features I intend to add in the near future:
 - [x] Add "Undo" button in case you accidentally hit a weather icon
 - [x] Add all missing crop types (except trees and grains)
 - [x] Separate crops by season
-- [ ] Mobile-specific: an anchor button to jump to the next crop and/or an overlaid navigation menu
-- [ ] General design improvements / optimizations
+- [x] Mobile-specific: an anchor button to jump to the next crop and/or an overlaid navigation menu
+- [x] General design improvements / optimizations
 
 Nice-to-have features that are lower priority:
 
@@ -69,3 +69,5 @@ Nice-to-have features that are lower priority:
 This Harvest Moon calculator is built with HTML, SCSS, and JavaScript. It uses webpack for module bundling and SCSS-to-CSS compiling and minifying. Weather and crop images, as well as values for crop growth stages, were taken from [Fogu.com](https://fogu.com/hm8/basics/weather.php) (the most useful Harvest Moon / Story of Seasons site on the web, in my huge-fan opinion). The font is "Chango" from [Google Fonts](https://fonts.google.com/specimen/Chango).
 
 I intend to use this app primarily on my phone (while playing Sunshine Islands), so it's designed mobile-first with CSS Grid. The desktop version is slightly more spread out but not really optimized for larger screen viewing.
+
+The down arrow icon used on the add crops select dropdown and the fixed anchor button is by [Roundicons](https://www.flaticon.com/authors/roundicons) from [www.flaticon.com](https://www.flaticon.com/).

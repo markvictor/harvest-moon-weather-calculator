@@ -5,6 +5,7 @@ import {
   refreshCurrentCrops,
   addNewCropSelections,
   updateDropdownOptions,
+  jumpToNextCrop,
 } from "./domDrawing.js";
 import {
   myCrops,
@@ -69,6 +70,9 @@ const addListeners = function () {
   addCropRadioButtons.forEach((button) =>
     button.addEventListener("change", updateDropdownOptions)
   );
+
+  const cropAnchorButton = document.getElementById("next-crop-anchor");
+  cropAnchorButton.addEventListener("click", jumpToNextCrop);
 };
 
 // LocalStorage test from MDN

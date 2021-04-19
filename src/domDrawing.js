@@ -198,9 +198,33 @@ const updateDropdownOptions = function () {
   addNewCropSelections(this.value);
 };
 
+const jumpToNextCrop = function () {
+  const cropsContainer = document.getElementById("current-crops");
+  const cropList = [...cropsContainer.querySelectorAll(".growing-crop")];
+
+  const topOfCropsContainer = cropsContainer.offsetTop;
+  let currentScroll = window.pageYOffset;
+
+  let newScrollDestination;
+
+  if (cropList.length === 0) {
+    newScrollDestination = cropsContainer.offsetTop;
+  } else if (currentScroll < topOfCropsContainer) {
+    newScrollDestination = cropList[0].offsetTop;
+  } else {
+    let cropToScrollTo = cropList.find(
+      (crop) => crop.offsetTop > currentScroll
+    );
+    newScrollDestination = cropToScrollTo.offsetTop;
+  }
+
+  window.scrollTo(0, newScrollDestination);
+};
+
 export {
   displayNewCrop,
   refreshCurrentCrops,
   addNewCropSelections,
   updateDropdownOptions,
+  jumpToNextCrop,
 };
