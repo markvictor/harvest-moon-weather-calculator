@@ -70,4 +70,4 @@ This Harvest Moon calculator is built with HTML, SCSS, and JavaScript. It uses w
 
 I intend to use this app primarily on my phone (while playing Sunshine Islands), so it's designed mobile-first with CSS Grid. The desktop version is slightly more spread out but not really optimized for larger screen viewing.
 
-The down arrow icon used on the add crops select dropdown and the fixed anchor button, as well as the up arrow on the return anchor, are by [Roundicons](https://www.flaticon.com/authors/roundicons) from [www.flaticon.com](https://www.flaticon.com/).
+The down arrow icon used on the add crops select dropdown and the fixed anchor button, as well as the up arrow on the return anchor, are by [Roundicons](https://www.flaticon.com/authors/roundicons) from [www.flaticon.com](https://www.flaticon.com/). Background texture PNGs on the body and add crop form are from [Transparent Textures](https://www.transparenttextures.com/).
