@@ -1,8 +1,11 @@
 $blue-water: #1838b8;
 $light-gray: #919191;
 $harvest-green: #48a840;
-$dirt-brown: #c09050;
+$sign-brown: #c09050;
 $font-gray: #333333;
+$sky-blue: #89c4fe;
+$sign-brown: #e68325;
+$farmer-blue: #016ad5;
 
 @mixin container-padding {
   padding: 12px;
@@ -60,19 +63,28 @@ body {
   color: $font-gray;
 }
 
+#outer-container {
+  background-color: $farmer-blue;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .limited-container {
   max-width: 1200px;
 }
 
 #jump-to-weather-buttons {
   bottom: 2.5rem;
-  background: $dirt-brown url("../images/up-arrow.png") no-repeat center;
+  background: $sign-brown url("../images/up-arrow.png") no-repeat center;
   @include anchor-buttons;
 }
 
 #next-crop-anchor {
   bottom: 0.25rem;
-  background: $dirt-brown url("../images/down-arrow.png") no-repeat center;
+  background: $sign-brown url("../images/down-arrow.png") no-repeat center;
   @include anchor-buttons;
 }
 
@@ -91,8 +103,8 @@ body {
         border-radius: 8px;
         width: 25vw;
         max-width: 100px;
-        -webkit-box-shadow: 0px 0px 3px 3px $dirt-brown;
-        box-shadow: 0px 0px 3px 3px $dirt-brown;
+        -webkit-box-shadow: 0px 0px 3px 3px $sign-brown;
+        box-shadow: 0px 0px 3px 3px $sign-brown;
         &:hover,
         &:focus {
           -webkit-box-shadow: 0px 0px 8px 3px $blue-water;
@@ -111,9 +123,9 @@ body {
   #weather-buttons-undo {
     @include button-style;
     margin-top: 22px;
-    background-color: $dirt-brown;
+    background-color: $sign-brown;
     &:hover {
-      @include darken-on-hover($dirt-brown);
+      @include darken-on-hover($sign-brown);
     }
   }
 }
@@ -124,7 +136,7 @@ body {
   right: 0;
   max-width: 75vw;
   width: 600px;
-  background-color: $dirt-brown;
+  background-color: $sign-brown;
   z-index: 30;
   border-radius: 6px 0px 0px 6px;
   @include container-padding;
@@ -148,7 +160,7 @@ body {
     justify-content: center;
     min-width: max-content;
     cursor: pointer;
-    background-color: $dirt-brown;
+    background-color: $sign-brown;
     border-radius: 6px 0px 0px 6px;
     -webkit-box-shadow: -4px 0px 4px 0px $light-gray;
     box-shadow: -4px 0px 4px 0px $light-gray;
@@ -173,9 +185,9 @@ body {
       // box-sizing: border-box;
       // display: inline-block;
       // background-color: $light-gray;
-      border: 2px inset $dirt-brown;
+      border: 2px inset $sign-brown;
       box-shadow: none;
-      background-color: scale-color($dirt-brown, $lightness: 30%);
+      background-color: scale-color($sign-brown, $lightness: 30%);
       background-image: url("../images/down-arrow.png");
       background-repeat: no-repeat;
       background-position: 95%;
@@ -198,20 +210,23 @@ body {
 #current-crops {
   max-width: 1200px;
   display: grid;
+  grid-gap: 10px;
   @include container-padding;
   @media only screen and (min-width: 678px) {
     grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
+    // justify-items: center;
   }
   @media only screen and (min-width: 900px) {
     grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
+    // justify-items: center;
   }
   .growing-crop {
     display: flex;
     flex-direction: column;
     padding: 20px 0px;
     position: relative;
+    background-color: $sky-blue;
+    border-radius: 6px;
     &::after {
       content: "";
       position: absolute;
@@ -219,6 +234,7 @@ body {
       bottom: 0;
       width: 50%; /* or 100px */
       border-bottom: 2px solid $blue-water;
+      display: none; // hidden for now until we make this a watering bar
     }
     span {
       padding: 6px 20px;

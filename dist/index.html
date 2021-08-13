@@ -13,82 +13,84 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
-    <div id="jump-to-weather-buttons"></div>
-    <div id="next-crop-anchor"></div>
-    <div id="calculator-body" class="limited-container">
-      <div id="weather-buttons-container">
-        <div data-weather="sunny" class="weather-button">
-          <img src="images/hmsi_sunny.png" />
+    <div id="outer-container">
+      <div id="jump-to-weather-buttons"></div>
+      <div id="next-crop-anchor"></div>
+      <div id="calculator-body" class="limited-container">
+        <div id="weather-buttons-container">
+          <div data-weather="sunny" class="weather-button">
+            <img src="images/hmsi_sunny.png" />
+          </div>
+          <div data-weather="clear" class="weather-button">
+            <img src="images/hmsi_clear.png" />
+          </div>
+          <div data-weather="cloudy" class="weather-button">
+            <img src="images/hmsi_cloudy.png" />
+          </div>
+          <div data-weather="drizzle" class="weather-button">
+            <img src="images/hmsi_drizzle.png" />
+          </div>
+          <div data-weather="rainy" class="weather-button">
+            <img src="images/hmsi_rainy.png" />
+          </div>
+          <div data-weather="snowy" class="weather-button">
+            <img src="images/hmsi_snowy.png" />
+          </div>
+          <div data-weather="blizzard" class="weather-button">
+            <img src="images/hmsi_blizzard.png" />
+          </div>
+          <div data-weather="hurricane" class="weather-button">
+            <img src="images/hmsi_hurricane.png" />
+          </div>
         </div>
-        <div data-weather="clear" class="weather-button">
-          <img src="images/hmsi_clear.png" />
-        </div>
-        <div data-weather="cloudy" class="weather-button">
-          <img src="images/hmsi_cloudy.png" />
-        </div>
-        <div data-weather="drizzle" class="weather-button">
-          <img src="images/hmsi_drizzle.png" />
-        </div>
-        <div data-weather="rainy" class="weather-button">
-          <img src="images/hmsi_rainy.png" />
-        </div>
-        <div data-weather="snowy" class="weather-button">
-          <img src="images/hmsi_snowy.png" />
-        </div>
-        <div data-weather="blizzard" class="weather-button">
-          <img src="images/hmsi_blizzard.png" />
-        </div>
-        <div data-weather="hurricane" class="weather-button">
-          <img src="images/hmsi_hurricane.png" />
-        </div>
+        <button id="weather-buttons-undo">Undo last day</button>
       </div>
-      <button id="weather-buttons-undo">Undo last day</button>
+      <div id="add-crops" class="limited-container hidden">
+        <div id="add-crops-reveal">+</div>
+        <form id="add-crops-form" autocomplete="off">
+          <label for="new-crop-dropdown">Add a crop:</label>
+          <div class="season-radio-buttons">
+            <label for="spring"
+              ><input
+                type="radio"
+                id="spring"
+                name="season"
+                value="Spring"
+                checked
+              />Spring</label
+            >
+            <label for="summer"
+              ><input
+                type="radio"
+                id="summer"
+                name="season"
+                value="Summer"
+              />Summer</label
+            >
+            <label for="fall"
+              ><input
+                type="radio"
+                id="fall"
+                name="season"
+                value="Fall"
+              />Fall</label
+            >
+          </div>
+          <div class="select-crop-box">
+            <span id="select-dropdown-arrow"></span>
+            <select name="type" id="new-crop-dropdown"></select>
+            <input type="submit" value="Add" />
+          </div>
+          <input
+            type="checkbox"
+            id="apply-days-weather"
+            name="apply-days-weather"
+            checked
+          /><label for="apply-days-weather">Apply today's weather</label>
+        </form>
+      </div>
+      <div id="current-crops"></div>
     </div>
-    <div id="add-crops" class="limited-container hidden">
-      <div id="add-crops-reveal">+</div>
-      <form id="add-crops-form" autocomplete="off">
-        <label for="new-crop-dropdown">Add a crop:</label>
-        <div class="season-radio-buttons">
-          <label for="spring"
-            ><input
-              type="radio"
-              id="spring"
-              name="season"
-              value="Spring"
-              checked
-            />Spring</label
-          >
-          <label for="summer"
-            ><input
-              type="radio"
-              id="summer"
-              name="season"
-              value="Summer"
-            />Summer</label
-          >
-          <label for="fall"
-            ><input
-              type="radio"
-              id="fall"
-              name="season"
-              value="Fall"
-            />Fall</label
-          >
-        </div>
-        <div class="select-crop-box">
-          <span id="select-dropdown-arrow"></span>
-          <select name="type" id="new-crop-dropdown"></select>
-          <input type="submit" value="Add" />
-        </div>
-        <input
-          type="checkbox"
-          id="apply-days-weather"
-          name="apply-days-weather"
-          checked
-        /><label for="apply-days-weather">Apply today's weather</label>
-      </form>
-    </div>
-    <div id="current-crops"></div>
     <script type="text/javascript" src="bundle.js"></script>
   </body>
 </html>
