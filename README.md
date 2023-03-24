@@ -4,6 +4,8 @@
 
 This calculator is specifically designed for use with _Harvest Moon: Sunshine Islands_ or _Harvest Moon: Island of Happiness_ (both for the Nintendo DS). In these games, crops require a specific number of **days**, **water** points, and **sun** points in order to progress through their respective growth stages. This calculator allows you to keep track of your currently-growing crops and how many more points of **water**, **sun**, and **days** each needs to reach its next growth stage, as well as apply a day's weather points to all active crops by pressing a single button.
 
+Note: the crop growth values used in this project are specific to _Sunshine Islands_.  _Island of Happiness_ has different values -- for instance, corn seed has a max sun value of 19 in _SI_ but a max value of only 16 in _IoH_.  Editing `cropslist.js` with the _IoH_ values would allow it to work for that game, too.
+
 This project is a work-in-progress: see the [Future Features](#future-features) section below for items that will hopefully be added soon.
 
 ## Functionality
