@@ -203,7 +203,7 @@ class Corn extends Crop {
       {
         stage: "seed",
         days: 3,
-        sun: { min: 5, max: 9 },
+        sun: { min: 5, max: 19 },
         water: { min: 3, max: 11 },
       },
       {
