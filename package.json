@@ -19,7 +19,7 @@
   "homepage": "https://github.com/jwern/harvest-moon-weather-calculator#readme",
   "devDependencies": {
     "webpack": "^5.28.0",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.10.0"
   },
   "dependencies": {
     "file-loader": "^6.2.0",
