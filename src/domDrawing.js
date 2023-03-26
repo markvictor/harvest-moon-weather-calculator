@@ -33,8 +33,19 @@ const setCropText = function (divElement, divType, crop) {
   divElement.innerText = textTypes[divType];
 };
 
+const setOverlayVals = function (divElement, divType, crop) {
+  const textTypes = {
+    stage: `${crop._currentAge}`,
+    days: `${crop._totalDays}`,
+    water: `${crop._totalWater}`,
+    sun: `${crop._totalSun}`,
+  };
+
+  divElement.value = Number(textTypes[divType]);
+};
+
 const checkHarvestStatus = function (button, crop) {
-  if (crop.age.stage === "mature") {
+    if (crop.age.stage === "mature") {
     button.classList.remove("hidden");
   } else {
     button.classList.add("hidden");
@@ -56,6 +67,16 @@ const updateCropDisplay = function (cropDiv, crop) {
 
   const sunSpan = cropDiv.querySelector(".growing-crop-sun");
   setCropText(sunSpan, "sun", crop);
+
+  const overlayAge = cropDiv.querySelector(".overlay-crop-age-input");
+  setOverlayVals(overlayAge, "stage", crop);
+
+  const overlayDays = cropDiv.querySelector(".overlay-crop-days-input");
+  setOverlayVals(overlayDays, "days", crop);
+  const overlayWater = cropDiv.querySelector(".overlay-crop-water-input");
+  setOverlayVals(overlayWater, "water", crop);
+  const overlaySun = cropDiv.querySelector(".overlay-crop-sun-input");
+  setOverlayVals(overlaySun, "sun", crop);
 };
 
 const getCropsContainer = function () {
@@ -102,26 +123,74 @@ const waterCrop = function () {
   updateCropDisplay(cropToWater, wateredCrop);
 };
 
+const editCrop = function () {
+  const cropDiv = getCropDiv(this);
+  const overlay = cropDiv.querySelector(".growing-overlay-crop");
+  overlay.classList.remove("hidden");
+};
+
+const saveCrop = function () {
+  const cropToEdit = getCropDiv(this);
+
+  const overlayAge = cropToEdit.querySelector(".overlay-crop-age-input");
+  const overlayDays = cropToEdit.querySelector(".overlay-crop-days-input");
+  const overlayWater = cropToEdit.querySelector(".overlay-crop-water-input");
+  const overlaySun = cropToEdit.querySelector(".overlay-crop-sun-input");
+  const values = [overlayDays.value, overlayWater.value, overlaySun.value, overlayAge.value]
+
+  let editedCrop = myCrops.editCrop(cropToEdit, values);
+  updateCropDisplay(cropToEdit, editedCrop);
+  const overlay = cropToEdit.querySelector(".growing-overlay-crop");
+  overlay.classList.add("hidden");
+};
+
+const cancelCrop = function () {
+  const cropDiv = getCropDiv(this);
+  const overlay = cropDiv.querySelector(".growing-overlay-crop");
+  overlay.classList.add("hidden");
+};
+
 const createNewCropButtons = function () {
   const cropButtons = createElementWithClass("div", "growing-crop-buttons");
   const cropHarvestButton = createElementWithClass("button", "harvest-button");
   const cropScytheButton = createElementWithClass("button", "scythe-button");
   const cropWaterButton = createElementWithClass("button", "water-button");
+  const editButton = createElementWithClass("button", "edit-button");
 
   cropHarvestButton.innerText = "Harvest";
   cropHarvestButton.classList.add("hidden");
   cropScytheButton.innerText = "Scythe";
   cropWaterButton.innerText = "Water";
+  editButton.innerText = "...";
 
   cropHarvestButton.addEventListener("click", harvestCrop);
   cropScytheButton.addEventListener("click", scytheCrop);
   cropWaterButton.addEventListener("click", waterCrop);
+  editButton.addEventListener("click", editCrop);
 
   cropButtons.appendChild(cropHarvestButton);
   cropButtons.appendChild(cropScytheButton);
   cropButtons.appendChild(cropWaterButton);
+  cropButtons.appendChild(editButton);
 
   return cropButtons;
+};
+
+const createNewOverlayButtons = function () {
+  const overlayButtons = createElementWithClass("section", "crop-overlay-buttons");
+  const saveButton = createElementWithClass("button", "save-button");
+  const cancelButton = createElementWithClass("button", "cancel-button");
+
+  saveButton.innerText = "Save";
+  cancelButton.innerText = "Cancel";
+
+  saveButton.addEventListener("click", saveCrop);
+  cancelButton.addEventListener("click", cancelCrop);
+
+  overlayButtons.appendChild(saveButton);
+  overlayButtons.appendChild(cancelButton);
+
+  return overlayButtons;
 };
 
 const createNewCropDiv = function (crop) {
@@ -138,7 +207,11 @@ const createNewCropDiv = function (crop) {
 
   const cropButtons = createNewCropButtons();
 
+  const newOverlayDiv = createNewCropDivOverlay(crop);
+  newOverlayDiv.classList.add("hidden");
+
   const childDivs = [
+    newOverlayDiv,
     cropNameSpan,
     cropStageSpan,
     cropDaysSpan,
@@ -152,6 +225,68 @@ const createNewCropDiv = function (crop) {
   updateCropDisplay(newCropDiv, crop);
 
   return newCropDiv;
+};
+
+const createNewCropDivOverlay = function (crop) {
+  const newOverlayDiv = createElementWithClass("div", "growing-overlay-crop");
+  newOverlayDiv.setAttribute("data-id", crop.id+'-overlay');
+
+  const overlaySpan = createElementWithClass("span", "overlay-crop-name");
+  overlaySpan.innerText = "Edit " + crop.constructor.name;
+
+
+  const overlayAgeSpan = createElementWithClass("div", "overlay-crop-age-span");
+  const overlayAgeLabel = createElementWithClass("label", "overlay-crop-age-label");
+  overlayAgeLabel.innerText = "Stage";
+  const overlayAgeInput = createElementWithClass("select", "overlay-crop-age-input");
+  crop.stages.forEach((stage, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = stage;
+    overlayAgeInput.appendChild(opt);
+  });
+
+  overlayAgeSpan.appendChild(overlayAgeLabel);
+  overlayAgeSpan.appendChild(overlayAgeInput);
+
+  const overlayDaysSpan = createElementWithClass("div", "overlay-crop-days-span");
+  const overlayDaysLabel = createElementWithClass("label", "overlay-crop-days-label");
+  overlayDaysLabel.innerText = "Total Days";
+  const overlayDaysInput = createElementWithClass("input", "overlay-crop-days-input");
+  overlayDaysInput.setAttribute("type", "number");
+  overlayDaysSpan.appendChild(overlayDaysLabel);
+  overlayDaysSpan.appendChild(overlayDaysInput);
+
+  const overlayWaterSpan = createElementWithClass("div", "overlay-crop-water-span");
+  const overlayWaterLabel = createElementWithClass("label", "overlay-crop-water-label");
+  overlayWaterLabel.innerText = "Total Water";
+  const overlayWaterCount = createElementWithClass("input", "overlay-crop-water-input");
+  overlayWaterCount.setAttribute("type", "number");
+  overlayWaterSpan.appendChild(overlayWaterLabel);
+  overlayWaterSpan.appendChild(overlayWaterCount);
+
+  const overlaySunSpan = createElementWithClass("div", "overlay-crop-sun-span");
+  const overlaySunLabel = createElementWithClass("label", "overlay-crop-sun-label");
+  overlaySunLabel.innerText = "Total Sun";
+  const overlaySunCount = createElementWithClass("input", "overlay-crop-sun-input");
+  overlaySunCount.setAttribute("type", "number");
+  overlaySunSpan.appendChild(overlaySunLabel);
+  overlaySunSpan.appendChild(overlaySunCount); 
+
+  const overlayButtons = createNewOverlayButtons();
+
+  const childDivs = [
+    overlaySpan,
+    overlayAgeSpan,
+    overlayDaysSpan,
+    overlayWaterSpan,
+    overlaySunSpan,
+    overlayButtons,
+  ];
+
+  childDivs.forEach((child) => newOverlayDiv.appendChild(child));
+
+  return newOverlayDiv;
 };
 
 const displayNewCrop = function (crop) {

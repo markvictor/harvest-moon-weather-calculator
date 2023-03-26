@@ -6,6 +6,7 @@ $font-gray: #333333;
 $sky-blue: #89c4fe;
 $sign-brown: #e68325;
 $farmer-blue: #016ad5;
+$cancel-red: #FF5C5C;
 
 @mixin container-padding {
   padding: 12px;
@@ -242,7 +243,44 @@ body {
     span {
       padding: 6px 20px;
     }
-    .growing-crop-buttons {
+    .growing-overlay-crop {
+      background-color: lightgrey;
+      height: calc(100% - 40px);
+      position: absolute;
+      width: 100%;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0px;
+      margin-top: -20px;
+      &.hidden {
+        display: none;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        left: 20px; // match padding on .growing-crop
+        bottom: 0;
+        width: 50%; /* or 100px */
+        border-bottom: 2px solid $blue-water;
+        display: none; // hidden for now until we make this a watering bar
+      }
+      div {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 6px 20px;
+
+        label {
+          font-size: 0.75em;
+        }
+        input, select {
+          box-sizing: border-box;
+          font-family: "Chango", cursive;
+          width: 100%;
+        }
+      }
+    }
+    .growing-crop-buttons, .crop-overlay-buttons {
       padding: 6px 20px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -253,9 +291,9 @@ body {
           display: none;
         }
         &.scythe-button {
-          background-color: $light-gray;
+          background-color: $cancel-red;
           &:hover {
-            @include darken-on-hover($light-gray);
+            @include darken-on-hover($cancel-red);
           }
         }
         &.water-button {
@@ -268,6 +306,27 @@ body {
           background-color: $harvest-green;
           &:hover {
             @include darken-on-hover($harvest-green);
+          }
+        }
+        &.edit-button {
+          background-color: $light-gray;
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          &:hover {
+            @include darken-on-hover($light-gray);
+          }
+        }
+        &.save-button {
+          background-color: $harvest-green;
+          &:hover {
+            @include darken-on-hover($harvest-green);
+          }
+        }
+        &.cancel-button {
+          background-color: $cancel-red;
+          &:hover {
+            @include darken-on-hover($cancel-red);
           }
         }
       }

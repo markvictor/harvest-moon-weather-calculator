@@ -53,6 +53,13 @@ class Crop {
     return this._ages[this._currentAge];
   }
 
+  set age(newAge) {
+    if (newAge === '') {
+        throw 'Val cannot be empty';
+    }
+    this._currentAge = newAge;
+  }
+
   get id() {
     return this._id;
   }
@@ -61,12 +68,39 @@ class Crop {
     return this._regrow;
   }
 
+  get stages() {
+    const stages = [];
+    this._ages.forEach((age, i) => stages[i] = age.stage);
+    return stages;
+  }
+
   get water() {
     return this._totalWater;
   }
 
+  set water(newWater) {
+    if (newWater === '') {
+        throw 'Val cannot be empty';
+    }
+    this._totalWater = newWater;
+  }
+
   get sun() {
     return this._totalSun;
+  }
+
+  set sun(newSun) {
+    if (newSun === '') {
+        throw 'Val cannot be empty';
+    }
+    this._totalSun = newSun;
+  }
+
+  set days(newDays) {
+    if (newDays === '') {
+        throw 'Val cannot be empty';
+    }
+    this._totalDays = newDays;
   }
 
   get waterNeeded() {
@@ -116,6 +150,9 @@ class Crop {
       this._totalWater,
       this._totalSun,
     ];
+
+    console.log('totals');
+    console.log(this._previousTotals);
 
     this.increaseDays();
     this.increaseSun(weather.sun);

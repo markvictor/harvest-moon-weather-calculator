@@ -86,6 +86,16 @@ const myCrops = (function () {
     return cropToWater;
   };
 
+  const editCrop = (crop, values) => {
+    let cropToEdit = findCropFromDOM(crop);
+    cropToEdit.days = Number(values[0]);
+    cropToEdit.water = Number(values[1]);
+    cropToEdit.sun = Number(values[2]);
+    cropToEdit.age = Number(values[3]);
+    setLocalCrops();
+    return cropToEdit;
+  };
+
   const undoLastWeather = () => {
     const weatherToUndo = trackWeatherButtonPressed.removeLastWeather();
 
@@ -113,6 +123,7 @@ const myCrops = (function () {
     removeCrop,
     checkRegrow,
     waterCrop,
+    editCrop,
     undoLastWeather,
     replaceWithLocalCrops,
     setLocalCrops,
