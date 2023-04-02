@@ -151,12 +151,10 @@ class Crop {
       this._totalSun,
     ];
 
-    console.log('totals');
-    console.log(this._previousTotals);
-
     this.increaseDays();
     this.increaseSun(weather.sun);
     this.increaseWater(weather.water);
+    this._lastWeather = weather;
 
     this.checkStatus();
   }
@@ -173,6 +171,9 @@ class Crop {
       let regrowStage = this._ages.find((age) => age.stage === this._regrow);
       let regrowIndex = this._ages.indexOf(regrowStage);
       this._currentAge = regrowIndex;
+      let localWeather = JSON.parse(localStorage.getItem("localLastWeatherPressed"));
+      this.increaseSun(localWeather.sun);
+
     }
   }
 
