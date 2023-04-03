@@ -22,7 +22,7 @@ class Crop {
   constructor(veggieObject) {
     // If we're instantiating with an existing veggieObject,
     // set starting values equal to the object's values
-    this._totalDays = veggieObject._totalDays || 0;
+    this._totalDays = veggieObject._totalDays || 1;
     this._totalWater = veggieObject._totalWater || 0;
     this._totalSun = veggieObject._totalSun || 0;
     this._ages = [
@@ -151,12 +151,12 @@ class Crop {
       this._totalSun,
     ];
 
+    this.checkStatus();
+
     this.increaseDays();
     this.increaseSun(weather.sun);
     this.increaseWater(weather.water);
-    this._lastWeather = weather;
 
-    this.checkStatus();
   }
 
   resetTotals() {
@@ -171,8 +171,11 @@ class Crop {
       let regrowStage = this._ages.find((age) => age.stage === this._regrow);
       let regrowIndex = this._ages.indexOf(regrowStage);
       this._currentAge = regrowIndex;
+      this.resetTotals();
+      this.increaseDays();
       let localWeather = JSON.parse(localStorage.getItem("localLastWeatherPressed"));
       this.increaseSun(localWeather.sun);
+      this.increaseWater(localWeather.water);
 
     }
   }
