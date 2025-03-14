@@ -1,4 +1,5 @@
 import { allCrops } from "./cropslist.js";
+import { allTrees } from "./treelist.js";
 
 const trackWeatherButtonPressed = (function () {
   let lastWeather = [];
@@ -32,6 +33,38 @@ const trackWeatherButtonPressed = (function () {
   };
 })();
 
+const trackSeasonChange = (function () {
+  let season = [];
+
+  const setLocalSeason = () => {
+    localStorage.setItem(
+        "localSeason",
+        JSON.stringify(season[0])
+    );
+  };
+
+  const getLocalSeason = (storedSeason) => {
+    let localSeason = JSON.parse(storedSeason);
+    season[0] = localSeason;
+  };
+
+  const seasonButton = (seasonSelected) => {
+    season[0] = seasonSelected;
+    setLocalSeason();
+  };
+
+  const getSeason = () => season[0];
+
+  const removeSeason = () => season.pop();
+
+  return {
+    seasonButton,
+    getSeason,
+    getLocalSeason,
+    removeSeason,
+  };
+})();
+
 const myCrops = (function () {
   let crops = [];
 
@@ -43,8 +76,10 @@ const myCrops = (function () {
 
   const addCrop = (crop) => {
     const todaysWeather = trackWeatherButtonPressed.getLastWeather();
-    const applyWeatherCheck = document.getElementById("apply-days-weather")
-      .checked;
+    let applyWeatherCheck = document.getElementById("apply-days-weather").checked;
+    if(crop._plantType === 'tree') {
+      applyWeatherCheck = document.getElementById("apply-days-weather-trees").checked;
+    }
 
     if (applyWeatherCheck && todaysWeather) {
       crop.increaseWater(todaysWeather.water);
@@ -108,9 +143,10 @@ const myCrops = (function () {
   const replaceWithLocalCrops = (cropsList) => {
     let newCropsList = [];
     let parsed = JSON.parse(cropsList);
+    let allPlants = {...allCrops, ...allTrees};
 
     for (let crop of parsed) {
-      let newVeg = new allCrops[crop.cropType](crop);
+      let newVeg = new allPlants[crop.cropType](crop);
       newCropsList.push(newVeg);
     }
 
@@ -144,4 +180,13 @@ const createNewCrop = function (type) {
   return newCrop;
 };
 
-export { addWeatherToCrops, trackWeatherButtonPressed, createNewCrop, myCrops };
+const createNewTree = function (type) {
+  const treeSpecies = allTrees[type];
+  const newTree = new treeSpecies();
+  myCrops.addCrop(newTree);
+  myCrops.setLocalCrops();
+
+  return newTree;
+};
+
+export { addWeatherToCrops, trackWeatherButtonPressed, trackSeasonChange, createNewCrop, createNewTree, myCrops };

@@ -513,6 +513,7 @@ const seasonalCrops = {
   Spring: ["Turnip", "Potato", "Cucumber", "Cabbage", "Strawberry"],
   Summer: ["Tomato", "Corn", "Onion", "Pumpkin", "Pineapple"],
   Fall: ["Eggplant", "Carrot", "Yam", "Spinach", "BellPepper"],
+  Winter: [],
 };
 
 export { allCrops, seasonalCrops };

@@ -1,5 +1,6 @@
-import { myCrops } from "./trackCrops.js";
+import {myCrops, trackSeasonChange} from "./trackCrops.js";
 import { allCrops, seasonalCrops } from "./cropslist.js";
+import { allTreeOptions } from "./treelist.js";
 
 const createElementWithClass = function (type, className) {
   const newElement = document.createElement(type);
@@ -83,9 +84,18 @@ const getCropsContainer = function () {
   return document.getElementById("current-crops");
 };
 
+const getTreesContainer = function () {
+  return document.getElementById("current-trees");
+};
+
 const removeCropFromPage = function (crop) {
   const cropsContainer = getCropsContainer();
   cropsContainer.removeChild(crop);
+};
+
+const removeTreeFromPage = function (crop) {
+  const treesContainer = getTreesContainer();
+  treesContainer.removeChild(crop);
 };
 
 const getCropDiv = function (crop) {
@@ -94,10 +104,15 @@ const getCropDiv = function (crop) {
 
 const scytheCrop = function () {
   const cropToRemove = getCropDiv(this);
+  const type = cropToRemove.getAttribute("data-type");
 
   if (confirm("Really remove?")) {
     myCrops.removeCrop(cropToRemove);
-    removeCropFromPage(cropToRemove);
+    if(type === 'tree') {
+      removeTreeFromPage(cropToRemove)
+    } else {
+      removeCropFromPage(cropToRemove);
+    }
   }
 };
 
@@ -113,6 +128,16 @@ const harvestCrop = function () {
       myCrops.removeCrop(cropToHarvest);
       removeCropFromPage(cropToHarvest);
     }
+  }
+};
+
+const harvestTree = function () {
+  const cropToHarvest = getCropDiv(this);
+
+  if (confirm("Harvest crop?")) {
+    let cropRegrows = myCrops.checkRegrow(cropToHarvest);
+
+    updateCropDisplay(cropToHarvest, cropRegrows);
   }
 };
 
@@ -176,6 +201,32 @@ const createNewCropButtons = function () {
   return cropButtons;
 };
 
+const createNewTreeButtons = function () {
+  const cropButtons = createElementWithClass("div", "growing-crop-buttons");
+  const cropHarvestButton = createElementWithClass("button", "harvest-button");
+  const cropScytheButton = createElementWithClass("button", "scythe-button");
+  const cropWaterButton = createElementWithClass("button", "water-button");
+  const editButton = createElementWithClass("button", "edit-button");
+
+  cropHarvestButton.innerText = "Harvest";
+  cropHarvestButton.classList.add("hidden");
+  cropScytheButton.innerText = "Scythe";
+  cropWaterButton.innerText = "Water";
+  editButton.innerText = "...";
+
+  cropHarvestButton.addEventListener("click", harvestTree);
+  cropScytheButton.addEventListener("click", scytheTree);
+  cropWaterButton.addEventListener("click", waterCrop);
+  editButton.addEventListener("click", editCrop);
+
+  cropButtons.appendChild(cropHarvestButton);
+  cropButtons.appendChild(cropScytheButton);
+  cropButtons.appendChild(cropWaterButton);
+  cropButtons.appendChild(editButton);
+
+  return cropButtons;
+};
+
 const createNewOverlayButtons = function () {
   const overlayButtons = createElementWithClass("section", "crop-overlay-buttons");
   const saveButton = createElementWithClass("button", "save-button");
@@ -196,6 +247,8 @@ const createNewOverlayButtons = function () {
 const createNewCropDiv = function (crop) {
   const newCropDiv = createElementWithClass("div", "growing-crop");
   newCropDiv.setAttribute("data-id", crop.id);
+  newCropDiv.setAttribute("data-type", crop._plantType);
+  newCropDiv.setAttribute("data-type", crop._plantType);
 
   const cropNameSpan = createElementWithClass("span", "growing-crop-name");
   setCropText(cropNameSpan, "name", crop);
@@ -271,7 +324,7 @@ const createNewCropDivOverlay = function (crop) {
   const overlaySunCount = createElementWithClass("input", "overlay-crop-sun-input");
   overlaySunCount.setAttribute("type", "number");
   overlaySunSpan.appendChild(overlaySunLabel);
-  overlaySunSpan.appendChild(overlaySunCount); 
+  overlaySunSpan.appendChild(overlaySunCount);
 
   const overlayButtons = createNewOverlayButtons();
 
@@ -296,6 +349,13 @@ const displayNewCrop = function (crop) {
   cropsContainer.appendChild(newCropDiv);
 };
 
+const displayNewTree = function (crop) {
+  const treesContainer = getTreesContainer();
+  const newTreeDiv = createNewCropDiv(crop);
+
+  treesContainer.appendChild(newTreeDiv);
+};
+
 const refreshCurrentCrops = function () {
   myCrops.getCrops().forEach((crop) => {
     const cropDiv = document.querySelector(`[data-id="${crop.id}"]`);
@@ -303,14 +363,26 @@ const refreshCurrentCrops = function () {
   });
 };
 
+const checkStoreSeasonCheckbox = function (season) {
+  let key = season.toLowerCase();
+  let checkbox = document.getElementById(key);
+  checkbox.setAttribute("checked", "true");
+};
+
 const getAddCropDropdown = function () {
   return document.getElementById("new-crop-dropdown");
 };
 
+const getAddTreeDropdown = function () {
+  return document.getElementById("new-tree-dropdown");
+};
+
 const addNewCropSelections = function (season) {
   const newCropSelector = getAddCropDropdown();
+  const newTreeSelector = getAddTreeDropdown();
   if (newCropSelector) {
     let cropsToDisplay = seasonalCrops[season];
+    let treesToDisplay = allTreeOptions;
     for (let crop of cropsToDisplay) {
       let option = document.createElement("option");
       option.value = crop;
@@ -319,14 +391,29 @@ const addNewCropSelections = function (season) {
       option.innerText = addSpaces(crop);
       newCropSelector.appendChild(option);
     }
+    for (let tree of treesToDisplay) {
+      let option = document.createElement("option");
+      option.value = tree;
+      option.setAttribute("name", tree);
+
+      option.innerText = addSpaces(tree);
+      newTreeSelector.appendChild(option);
+    }
   }
 };
 
-const updateDropdownOptions = function () {
+const changeSeason = function () {
+  trackSeasonChange.seasonButton(this.value);
   const newCropSelector = getAddCropDropdown();
+  const newTreeSelector = getAddTreeDropdown();
   if (newCropSelector) {
     while (newCropSelector.lastChild) {
       newCropSelector.removeChild(newCropSelector.lastChild);
+    }
+  }
+  if (newTreeSelector) {
+    while (newTreeSelector.lastChild) {
+      newTreeSelector.removeChild(newTreeSelector.lastChild);
     }
   }
 
@@ -363,9 +450,11 @@ const returnToTop = function () {
 
 export {
   displayNewCrop,
+  displayNewTree,
+  checkStoreSeasonCheckbox,
   refreshCurrentCrops,
   addNewCropSelections,
-  updateDropdownOptions,
+  changeSeason,
   jumpToNextCrop,
   returnToTop,
 };

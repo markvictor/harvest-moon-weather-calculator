@@ -2,17 +2,21 @@ require.context("../src/images/", true, /\.(jpg|jpeg|gif|png|svg|webp)$/);
 import "./style.scss";
 import {
   displayNewCrop,
+  displayNewTree,
   refreshCurrentCrops,
   addNewCropSelections,
-  updateDropdownOptions,
+  changeSeason,
   jumpToNextCrop,
   returnToTop,
+  checkStoreSeasonCheckbox,
 } from "./domDrawing.js";
 import {
   myCrops,
   addWeatherToCrops,
   trackWeatherButtonPressed,
+  trackSeasonChange,
   createNewCrop,
+  createNewTree,
 } from "./trackCrops.js";
 import { weatherTypes } from "./weathertypes.js";
 import { cropId } from "./crop.js";
@@ -36,8 +40,26 @@ const addCrop = function (event) {
   displayNewCrop(newCrop);
 };
 
+const addTree = function (event) {
+  event.preventDefault();
+  let crop = Object.fromEntries(new FormData(event.target).entries());
+  let newCrop = createNewTree(crop.type);
+  displayNewTree(newCrop);
+};
+
 const slideCropForm = function (button) {
   const form = document.getElementById("add-crops");
+  form.classList.toggle("hidden");
+
+  if (form.classList.contains("hidden")) {
+    button.target.innerText = "+";
+  } else {
+    button.target.innerText = "-";
+  }
+};
+
+const slideTreeForm = function (button) {
+  const form = document.getElementById("add-trees");
   form.classList.toggle("hidden");
 
   if (form.classList.contains("hidden")) {
@@ -53,6 +75,14 @@ const addListeners = function () {
     button.addEventListener("click", findWeatherType);
   });
 
+  const addCropRadioButtons = document.querySelectorAll(
+      'input[name="season"]'
+  );
+  addCropRadioButtons.forEach((button) => {
+        button.addEventListener("change", changeSeason)
+      }
+  );
+
   const undoWeatherButton = document.getElementById("weather-buttons-undo");
   undoWeatherButton.addEventListener("click", () => {
     myCrops.undoLastWeather();
@@ -65,12 +95,11 @@ const addListeners = function () {
   const addCropReveal = document.getElementById("add-crops-reveal");
   addCropReveal.addEventListener("click", (e) => slideCropForm(e));
 
-  const addCropRadioButtons = addCropForm.querySelectorAll(
-    'input[name="season"]'
-  );
-  addCropRadioButtons.forEach((button) =>
-    button.addEventListener("change", updateDropdownOptions)
-  );
+  const addTreeForm = document.getElementById("add-trees-form");
+  addTreeForm.addEventListener("submit", (e) => addTree(e));
+
+  const addTreeReveal = document.getElementById("add-trees-reveal");
+  addTreeReveal.addEventListener("click", (e) => slideTreeForm(e));
 
   const cropAnchorButton = document.getElementById("next-crop-anchor");
   cropAnchorButton.addEventListener("click", jumpToNextCrop);
@@ -114,11 +143,16 @@ const checkStorage = function () {
     let storedCropsList = localStorage.getItem("localMyCrops");
     let storedCropId = localStorage.getItem("localCropId");
     let storedWeatherSelected = localStorage.getItem("localLastWeatherPressed");
+    let storedSeason = localStorage.getItem("localSeason");
 
     if (storedCropsList) {
       myCrops.replaceWithLocalCrops(storedCropsList);
       for (let crop of myCrops.getCrops()) {
-        displayNewCrop(crop);
+        if(crop._plantType === 'tree' ) {
+          displayNewTree(crop);
+        } else {
+          displayNewCrop(crop);
+        }
       }
       if (storedCropId) {
         cropId.updateIdWithLocal(storedCropId);
@@ -126,7 +160,19 @@ const checkStorage = function () {
       if (storedWeatherSelected) {
         trackWeatherButtonPressed.getLocalLastWeather(storedWeatherSelected);
       }
+
     }
+    if (!storedSeason) {
+      storedSeason = "Spring"
+      trackSeasonChange.seasonButton(storedSeason);
+      addNewCropSelections(storedSeason);
+      checkStoreSeasonCheckbox(storedSeason);
+    } else {
+      trackSeasonChange.getLocalSeason(storedSeason);
+      addNewCropSelections(JSON.parse(storedSeason));
+      checkStoreSeasonCheckbox(JSON.parse(storedSeason))
+    }
+
   }
 };
 
@@ -135,7 +181,6 @@ const launchApp = (function () {
 
   if (calculator) {
     addListeners();
-    addNewCropSelections("Spring");
     checkStorage();
   }
 })();

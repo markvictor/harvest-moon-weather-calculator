@@ -34,6 +34,7 @@ class Crop {
     this._id = veggieObject._id || cropId.getNewId();
     this._regrow = false;
     this._previousTotals; // Used only for "undo last day" button
+    this._plantType = 'crop';
   }
 
   increaseDays() {
@@ -236,4 +237,125 @@ class Crop {
   }
 }
 
-export { cropId, Crop };
+class Tree extends Crop {
+
+  constructor(veggieObject) {
+    super(veggieObject);
+    this._plantType = 'tree';
+    this._ages = [
+      {
+        stage: "withered",
+      },
+      {
+        stage: "winter",
+      },
+    ];
+  }
+
+  ageCrop() {
+    let localSeason = JSON.parse(localStorage.getItem("localSeason"));
+    this._currentAge++;
+    if (localSeason === this.flowerSeason) {
+      let floweringStage = this._ages.find((age) => age.stage === "flowering");
+      this._currentAge = this._ages.indexOf(floweringStage);
+    }
+      this.resetTotals();
+  }
+
+  nextDay(weather) {
+    let localSeason = JSON.parse(localStorage.getItem("localSeason"));
+    this._previousTotals = [
+      this._currentAge,
+      this._totalDays,
+      this._totalWater,
+      this._totalSun,
+    ];
+
+    this.checkStatus();
+
+    if (localSeason !== 'Winter') {
+      this.increaseDays();
+      this.increaseSun(weather.sun);
+      this.increaseWater(weather.water);
+    }
+
+  }
+  checkStatus() {
+    let age = this.age;
+
+    let localSeason = JSON.parse(localStorage.getItem("localSeason"));
+
+    if(!['seed', 'sprout', 'sprout2'].includes(age.stage)) {
+      switch (localSeason) {
+        case "Winter":
+          let winterStage = this._ages.find((age) => age.stage === "winter");
+          this._currentAge = this._ages.indexOf(winterStage);
+          this.resetTotals();
+          return;
+        case this.flowerSeason:
+          if (age.stage === "blooming")
+            return;
+          if (age.stage === "winter" || age.stage === 'dormant') {
+            let floweringStage = this._ages.find((age) => age.stage === "flowering");
+            this._currentAge = this._ages.indexOf(floweringStage);
+            this.resetTotals();
+            return;
+          }
+          break;
+        case this.fruitSeason:
+          if (age.stage === "blooming") {
+            let fruitStage = this._ages.find((age) => age.stage === "fruit");
+            this._currentAge = this._ages.indexOf(fruitStage);
+            this.resetTotals();
+            return;
+          } else if (age.stage !== "fruit" && age.stage !== "dormant" && age.stage !== "mature") {
+            let dormantStage = this._ages.find((age) => age.stage === "dormant");
+            this._currentAge = this._ages.indexOf(dormantStage);
+            this.resetTotals();
+            return;
+          }
+          break;
+        default:
+          if (age.stage === "winter") {
+            let dormantStage = this._ages.find((age) => age.stage === "dormant");
+            this._currentAge = this._ages.indexOf(dormantStage);
+            this.resetTotals();
+            return;
+          } else {
+            let dormantStage = this._ages.find((age) => age.stage === "dormant");
+            this._currentAge = this._ages.indexOf(dormantStage);
+            this.resetTotals();
+          }
+          break;
+      }
+    }
+
+
+    if (age.stage === "withered" || localSeason === 'Winter') {
+      return;
+    }
+
+    // If crop has exceeded either maximum, wither it
+    if (this._totalWater > age.water.max || this._totalSun > age.sun.max) {
+      this.witherCrop();
+      return;
+    }
+
+    // If crop has met its # of days requirement...
+    if (this._totalDays >= age.days) {
+      // Not needed for trees
+      // If it's already a mature crop, wither it
+      // if (age.stage === "mature") {
+      //   this.witherCrop();
+      //   return;
+      // }
+      // If it's not a mature crop, and it's met its other minimums, age it
+      if (this._totalWater >= age.water.min && this._totalSun >= age.sun.min) {
+        this.ageCrop();
+      }
+    }
+  }
+
+}
+
+export { cropId, Crop, Tree };
